@@ -1,6 +1,4 @@
 ﻿using System;
-using System;
-using System.Collections.Generic;
 using Aviation.Engines;
 
 namespace Aviation.Aviation
@@ -8,14 +6,14 @@ namespace Aviation.Aviation
 	/// <summary>
 	/// Базовый класс авиации
 	/// </summary>
-	public abstract class PassengerAviationBase : IPassengerAviation
+	public abstract class PassengerAviationBase<T> : IPassengerAviation<T> where T: IEngine
 	{
 		public int Capacity { get; private set; }
 		public int Engaged { get; private set; }
 		public int TankCapacity { get; private set; }
 		public string Model { get; private set; }
 
-		public IEngine Engine { get; private set; }
+		public T Engine { get; private set; }
 
 		public void PlacePassenger(int count)
 		{
@@ -37,7 +35,7 @@ namespace Aviation.Aviation
 			Console.WriteLine("Все пассажиры из {0} высажены!", Model);
 		}
 
-		public void SendMessage(IPassengerAviation target, string mes)
+		public void SendMessage(IPassengerAviation<IEngine> target, string mes)
 		{
 			Console.WriteLine("{0} послал сообщение для {1}", Model, target.Model);
 			target.ReceiveMessage(mes);
@@ -53,7 +51,7 @@ namespace Aviation.Aviation
 			
 		}
 
-		protected PassengerAviationBase(int capacity, int tankCapacity, string model, IEngine engine)
+		protected PassengerAviationBase(int capacity, int tankCapacity, string model, T engine)
 		{
 			Capacity = capacity;
 			TankCapacity = tankCapacity;
@@ -61,5 +59,7 @@ namespace Aviation.Aviation
 			Engine = engine;
 			Engaged = 0;
 		}
+
+		public abstract object Clone();
 	}
 }

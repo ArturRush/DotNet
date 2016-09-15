@@ -41,16 +41,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aviation\AeroportEnumerator.cs" />
+    <Compile Include="Aviation\Aeroport.cs" />
+    <Compile Include="Aviation\IAeroport.cs" />
+    <Compile Include="Aviation\IHelicopter.cs" />
+    <Compile Include="Aviation\IPlane.cs" />
     <Compile Include="Aviation\PassengerAviationBase.cs" />
     <Compile Include="Aviation\Helicopter.cs" />
     <Compile Include="Aviation\IPassengerAviation.cs" />
     <Compile Include="Aviation\Plane.cs" />
     <Compile Include="Engines\EngineBase.cs" />
     <Compile Include="Engines\GasTurbineEngine.cs" />
+    <Compile Include="Engines\HelicopterEngine.cs" />
     <Compile Include="Engines\IEngine.cs" />
     <Compile Include="Engines\IGasTurbineEngine.cs" />
+    <Compile Include="Engines\IHelicopterEngine.cs" />
+    <Compile Include="Engines\IPlaneEngine.cs" />
     <Compile Include="Engines\IReactiveEngine.cs" />
+    <Compile Include="Engines\ITurbopropEngine.cs" />
+    <Compile Include="Engines\PlaneEngine.cs" />
     <Compile Include="Engines\ReactiveEngine.cs" />
+    <Compile Include="Engines\TurbopropEngine.cs" />
     <Compile Include="Factories\RussianAviationFactory.cs" />
     <Compile Include="Factories\IAviationFactory.cs" />
     <Compile Include="Factories\AmericanAviationFactory.cs" />

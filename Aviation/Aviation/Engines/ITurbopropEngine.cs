@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Aviation.Engines
 {
 	/// <summary>
-	/// Интерфейс "реактивный двигатель"
+	/// Интерфейс "Турбовинтовой двигатель"
 	/// </summary>
-	interface IReactiveEngine : IPlaneEngine
+	interface ITurbopropEngine : IPlaneEngine
 	{
 	}
 }

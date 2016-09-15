@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Aviation.Engines
 {
-	/// <summary>
-	/// Интерфейс "реактивный двигатель"
-	/// </summary>
-	interface IReactiveEngine : IPlaneEngine
+	interface ICheckEngine<in T> where T: IEngine
 	{
+		void Check(T obj);
 	}
 }

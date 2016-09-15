@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 namespace Aviation.Engines
 {
 	/// <summary>
-	/// Интерфейс "реактивный двигатель"
+	/// Интерфейс "Самолетный двигатель"
 	/// </summary>
-	interface IReactiveEngine : IPlaneEngine
+	public interface IPlaneEngine :IEngine
 	{
+		/// <summary>
+		/// Лететь вперед
+		/// </summary>
+		void Fly();
 	}
 }

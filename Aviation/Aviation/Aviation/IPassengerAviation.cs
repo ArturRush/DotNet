@@ -1,11 +1,12 @@
-﻿using Aviation.Engines;
+﻿using System;
+using Aviation.Engines;
 
 namespace Aviation.Aviation
 {
 	/// <summary>
 	/// Интерфейс "авиации"
 	/// </summary>
-	public interface IPassengerAviation
+	public interface IPassengerAviation<out T> : ICloneable where T: IEngine
 	{
 		/// <summary>
 		/// Вместимость салона(пассажиров)
@@ -29,7 +30,7 @@ namespace Aviation.Aviation
 		/// <summary>
 		/// Двигатель судна
 		/// </summary>
-		IEngine Engine { get; }
+		T Engine { get; }
 
 		/// <summary>
 		/// Поместить пассажиров в судно
@@ -45,8 +46,9 @@ namespace Aviation.Aviation
 		/// <summary>
 		/// Отправить сообщение другому судну
 		/// </summary>
+		/// <param name="target">Цель сообщения</param>
 		/// <param name="mes">Текст сообщения</param>
-		void SendMessage(IPassengerAviation target, string mes);
+		void SendMessage(IPassengerAviation<IEngine> target, string mes);
 
 		/// <summary>
 		/// Получить сообщение с другого судна

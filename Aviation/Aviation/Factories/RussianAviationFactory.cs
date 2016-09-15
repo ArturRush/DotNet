@@ -13,25 +13,35 @@ namespace Aviation.Factories
 	/// </summary>
 	class RussianAviationFactory : IAviationFactory
 	{
-		readonly IReactiveEngine TUReactiveEngine = new ReactiveEngine("НК-32");
-		readonly IGasTurbineEngine MIGasTurbineEngine = new GasTurbineEngine("ДКП-13");
+		readonly IReactiveEngine _tuReactiveEngine = new ReactiveEngine("НК-32");
+		readonly IGasTurbineEngine _miGasTurbineEngine = new GasTurbineEngine("ДКП-13");
+		readonly ITurbopropEngine _tuTurboPropEngine = new TurbopropEngine("ДР-13");
 
 		/// <summary>
 		/// Создать русский вертолет
 		/// </summary>
 		/// <returns>Русский вертолет</returns>
-		public IPassengerAviation CreateHelicopter()
+		public IPassengerAviation<IHelicopterEngine> CreateHelicopter()
 		{
-			return new Helicopter(4, 500, "Ми-3", (IEngine)MIGasTurbineEngine);
+			return new Helicopter<IGasTurbineEngine>(4, 500, "Ми-3", _miGasTurbineEngine);
 		}
 
 		/// <summary>
-		/// Создать русский самолет
+		/// Создать русский реактивный самолет
 		/// </summary>
-		/// <returns>Русский самолет</returns>
-		public IPassengerAviation CreatePlane()
+		/// <returns>Русский реактивный самолет</returns>
+		public IPassengerAviation<IPlaneEngine> CreateReactivePlane()
 		{
-			return new Plane(120, 50000, "ТУ-160", (IEngine)TUReactiveEngine);
+			return new Plane<IReactiveEngine>(120, 50000, "ТУ-160", _tuReactiveEngine);
+		}
+
+		/// <summary>
+		/// Создать русский турбовинтовой самолет
+		/// </summary>
+		/// <returns>Русский турбовинтовой самолет</returns>
+		public IPassengerAviation<IPlaneEngine> CreateTurbopropPlane()
+		{
+			return new Plane<ITurbopropEngine>(80, 45000, "ТУ-95", _tuTurboPropEngine);
 		}
 	}
 }

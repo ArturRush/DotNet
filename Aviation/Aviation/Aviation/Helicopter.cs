@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Aviation.Engines;
 
 namespace Aviation.Aviation
@@ -10,9 +6,9 @@ namespace Aviation.Aviation
 	/// <summary>
 	/// Вертолет
 	/// </summary>
-	public class Helicopter : PassengerAviationBase
+	public class Helicopter<T> : PassengerAviationBase<T>, IHelicopter<T> where T: IHelicopterEngine
 	{
-		public Helicopter(int capacity, int tankCapacity, string model, IEngine engine)
+		public Helicopter(int capacity, int tankCapacity, string model, T engine)
 			: base(capacity, tankCapacity, model, engine)
 		{
 			
@@ -29,6 +25,11 @@ namespace Aviation.Aviation
 			Console.WriteLine("Включить двигатель {0}", Engine.Model);
 			Engine.Move();
 			Console.WriteLine("{0} приземляется", Model);
+		}
+
+		public override object Clone()
+		{
+			return new Helicopter<T>(Capacity, TankCapacity, Model, Engine);
 		}
 	}
 }

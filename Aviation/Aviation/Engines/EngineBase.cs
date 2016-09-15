@@ -11,6 +11,7 @@ namespace Aviation.Engines
 	/// </summary>
 	public abstract class EngineBase : IEngine
 	{
+		public enum Direction { Forward, Backward, Right, Left, Up, Down}
 		public int Consumption { get; private set; }
 
 		public string Model { get; private set; }
@@ -20,6 +21,11 @@ namespace Aviation.Engines
 		public virtual void Move()
 		{
 			
+		}
+
+		public void ChangeSpeed(int newSpeed)
+		{
+			Console.WriteLine("Новая скорость {0} км/ч", newSpeed);
 		}
 
 		protected EngineBase(int consumption, string model, int speed)

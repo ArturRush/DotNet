@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Aviation.Aviation;
+using Aviation.Engines;
 
 namespace Aviation.Factories
 {
@@ -16,12 +17,18 @@ namespace Aviation.Factories
 		/// Создать вертолет
 		/// </summary>
 		/// <returns></returns>
-		IPassengerAviation CreateHelicopter();
+		IPassengerAviation<IHelicopterEngine>  CreateHelicopter();
 
 		/// <summary>
-		/// Создать самолет
+		/// Создать реактивный самолет
 		/// </summary>
 		/// <returns></returns>
-		IPassengerAviation CreatePlane();
+		IPassengerAviation<IPlaneEngine> CreateReactivePlane();
+
+		/// <summary>
+		/// Создать турбовинтовой самолет
+		/// </summary>
+		/// <returns></returns>
+		IPassengerAviation<IPlaneEngine> CreateTurbopropPlane();
 	}
 }

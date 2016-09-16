@@ -14,6 +14,11 @@ namespace Aviation.Aviation
 			
 		}
 
+		public IEngine Engine
+		{
+			get { return base.Engine; }
+		}
+
 		override public void MakeFlight(Routs.Cities from, Routs.Cities to)
 		{
 			if (Routs.GetDistance(from, to) > TankCapacity * 100 / Engine.Consumption)
@@ -29,7 +34,7 @@ namespace Aviation.Aviation
 
 		public override object Clone()
 		{
-			return new Helicopter<T>(Capacity, TankCapacity, Model, Engine);
+			return new Helicopter<T>(Capacity, TankCapacity, Model, (T)Engine);
 		}
 	}
 }

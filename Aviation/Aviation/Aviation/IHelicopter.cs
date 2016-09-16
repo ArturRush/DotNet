@@ -7,7 +7,7 @@ using Aviation.Engines;
 
 namespace Aviation.Aviation
 {
-	interface IHelicopter<out T> where T: IHelicopterEngine
+	interface IHelicopter<out T> : IPassengerAviation<IEngine> where T: IHelicopterEngine
 	{
 	}
 }

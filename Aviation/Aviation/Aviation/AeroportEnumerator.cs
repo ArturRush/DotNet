@@ -4,16 +4,16 @@ using Aviation.Engines;
 
 namespace Aviation.Aviation
 {
-	class AeroportEnumerator : IEnumerator<IPassengerAviation<IEngine>>
+	class AeroportEnumerator<T> : IEnumerator<T> where T : IPassengerAviation<IEngine>
 	{
-		private readonly IAeroport _aeroport;
+		private readonly IAeroport<T> _aeroport;
 		private int _curIndex;
-		private IPassengerAviation<IEngine> _curAero;
+		private T _curAero;
 
-		public AeroportEnumerator(IAeroport aeroport)
+		public AeroportEnumerator(IAeroport<T> aeroport)
         {
 			_aeroport = aeroport;
-			_curAero = default(IPassengerAviation<IEngine>);
+			_curAero = default(T);
             _curIndex = -1;
         }
 
@@ -35,7 +35,7 @@ namespace Aviation.Aviation
 			_curIndex = -1;
 		}
 
-		public IPassengerAviation<IEngine> Current
+		public T Current
 		{
 			get { return _curAero; }
 		}

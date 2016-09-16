@@ -9,11 +9,11 @@ namespace Aviation.Aviation
 	/// <summary>
 	/// Аэропорт
 	/// </summary>
-	class Aeroport : IAeroport
+	class Aeroport<T> : IAeroport<T> where T : IPassengerAviation<IEngine> 
 	{
-		private readonly List<IPassengerAviation<IEngine>> _aviation;
+		private readonly List<T> _aviation;
 
-		public IPassengerAviation<IEngine> this[int ind]
+		public T this[int ind]
 		{
 			get { return _aviation[ind]; }
 			set { _aviation[ind] = value; }
@@ -22,22 +22,22 @@ namespace Aviation.Aviation
 		public Aeroport(string name)
 		{
 			Name = name;
-			_aviation = new List<IPassengerAviation<IEngine>>();
+			_aviation = new List<T>();
 		}
 
 		public string Name { get; private set; }
 
-		public IEnumerator<IPassengerAviation<IEngine>> GetEnumerator()
+		public IEnumerator<T> GetEnumerator()
 		{
-			return new AeroportEnumerator(this);
+			return new AeroportEnumerator<T>(this);
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return new AeroportEnumerator(this);
+			return new AeroportEnumerator<T>(this);
 		}
 
-		public void Add(IPassengerAviation<IEngine> item)
+		public void Add(T item)
 		{
 			_aviation.Add(item);
 		}
@@ -47,17 +47,17 @@ namespace Aviation.Aviation
 			_aviation.Clear();
 		}
 
-		public bool Contains(IPassengerAviation<IEngine> item)
+		public bool Contains(T item)
 		{
 			return _aviation.Contains(item);
 		}
 
-		public void CopyTo(IPassengerAviation<IEngine>[] array, int arrayIndex)
+		public void CopyTo(T[] array, int arrayIndex)
 		{
 			_aviation.CopyTo(array, arrayIndex);
 		}
 
-		public bool Remove(IPassengerAviation<IEngine> item)
+		public bool Remove(T item)
 		{
 			return _aviation.Remove(item);
 		}
@@ -72,9 +72,9 @@ namespace Aviation.Aviation
 			get { return false; }
 		}
 
-		public IPassengerAviation<IEngine> GetAvia(int peoples, int distance)
+		public T GetAvia(int peoples, int distance)
 		{
-			var temp = _aviation[0].Capacity >= peoples && distance <= _aviation[0].TankCapacity * 100 / _aviation[0].Engine.Consumption ? _aviation[0] : null;
+			var temp = _aviation[0].Capacity >= peoples && distance <= _aviation[0].TankCapacity * 100 / _aviation[0].Engine.Consumption ? _aviation[0] : default(T);
 			foreach (var avia in _aviation)
 			{
 				if (avia.Capacity >= peoples && distance <= avia.TankCapacity * 100 / avia.Engine.Consumption
@@ -110,44 +110,6 @@ namespace Aviation.Aviation
 			}
 			Console.WriteLine("Всего {0} шт.", heliCount);
 
-		}
-
-		public void FillAeroport(int planes, int helicopters)
-		{
-			AmericanAviationFactory aaf = new AmericanAviationFactory();
-			RussianAviationFactory raf = new RussianAviationFactory();
-
-			Random r = new Random();
-			int americanPlanes = r.Next(planes);
-			int russianHelicopters = r.Next(helicopters);
-
-			for (int i = 0; i < planes - americanPlanes; ++i)
-			{
-				int reactive = r.Next(2);
-				if (reactive == 1)
-					_aviation.Add(raf.CreateReactivePlane());
-				else
-					_aviation.Add(raf.CreateTurbopropPlane());
-			}
-
-			for (int i = 0; i < americanPlanes; ++i)
-			{
-				int reactive = r.Next(2);
-				if (reactive == 1)
-					_aviation.Add(aaf.CreateReactivePlane());
-				else
-					_aviation.Add(aaf.CreateTurbopropPlane());
-			}
-			
-			for (int i = 0; i < russianHelicopters; ++i)
-			{
-				_aviation.Add(raf.CreateHelicopter());
-			}
-
-			for (int i = 0; i < helicopters - russianHelicopters; ++i)
-			{
-				_aviation.Add(aaf.CreateHelicopter());
-			}
 		}
 	}
 }

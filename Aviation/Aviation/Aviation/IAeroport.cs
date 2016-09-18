@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Aviation.Engines;
 
 namespace Aviation.Aviation
@@ -27,5 +28,24 @@ namespace Aviation.Aviation
 		/// Получить список воздушных судов аэропорта
 		/// </summary>
 		void PrintAviation();
+
+		/// <summary>
+		/// Сортировка коллекции по заданному условию
+		/// </summary>
+		/// <param name="sorter">Функция сравнения двух элементов</param>
+		void Sort(Comparison<T> sorter);
+
+		/// <summary>
+		/// Выполняет указанное действие для всех элементов коллекции
+		/// </summary>
+		/// <param name="smth">Действие</param>
+		void DoSmth(Action<T> smth);
+
+		/// <summary>
+		/// Для каждого элемента коллекции складывает значение, возвращаемое переданной функцией
+		/// </summary>
+		/// <param name="takeInfo">Функция подсчета</param>
+		/// <returns>Сумма значений</returns>
+		int PrintSomeInfo(Func<T, int> takeInfo);
 	}
 }

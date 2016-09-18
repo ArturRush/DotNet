@@ -17,7 +17,7 @@ namespace Aviation.Aviation
 
 		public void PlacePassenger(int count)
 		{
-			if (Capacity <= Engaged)
+			if (Capacity <= Engaged + count)
 			{
 				Engaged = Capacity;
 				Console.WriteLine("Судно {0} заполнено!", Model);

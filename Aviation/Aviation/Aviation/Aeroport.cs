@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Aviation.Engines;
 using Aviation.Factories;
 
@@ -110,6 +112,24 @@ namespace Aviation.Aviation
 			}
 			Console.WriteLine("Всего {0} шт.", heliCount);
 
+		}
+
+		public void Sort(Comparison<T> sorter)
+		{
+			_aviation.Sort(sorter);
+		}
+
+		public void DoSmth(Action<T> smth)
+		{
+			foreach (var avia in _aviation)
+			{
+				smth(avia);
+			}
+		}
+
+		public int PrintSomeInfo(Func<T, int> takeInfo)
+		{
+			return _aviation.Sum(takeInfo);
 		}
 	}
 }

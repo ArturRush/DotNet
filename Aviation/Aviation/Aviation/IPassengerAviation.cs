@@ -1,5 +1,6 @@
 ﻿using System;
 using Aviation.Engines;
+using Aviation.Loggers;
 
 namespace Aviation.Aviation
 {
@@ -8,6 +9,23 @@ namespace Aviation.Aviation
 	/// </summary>
 	public interface IPassengerAviation<out T> : ICloneable where T: IEngine
 	{
+		/// <summary>
+		/// Событие совершения полета
+		/// </summary>
+		event Action<AviaFlightEventArgs> OnFlight;
+		/// <summary>
+		/// Событие посадки пассажиров
+		/// </summary>
+		event Action<AviaPassInEventArgs> OnPassIn;
+		/// <summary>
+		/// Событие Высадки пассажиров
+		/// </summary>
+		event Action<AviaEventArgs> OnPassOff;
+		/// <summary>
+		/// Событие посылки сообщения
+		/// </summary>
+		event Action<AviaSendMessEventArgs> OnSendingMessage;
+
 		/// <summary>
 		/// Вместимость салона(пассажиров)
 		/// </summary>

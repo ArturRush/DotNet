@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Policy;
 using Aviation.Engines;
 using Aviation.Aviation;
 using Aviation.Factories;
+using Aviation.Loggers;
 
 namespace Aviation
 {
@@ -11,35 +15,56 @@ namespace Aviation
 		static void Main(string[] args)
 		{
 			IAeroport<IPassengerAviation<IEngine>> aer = new Aeroport<IPassengerAviation<IEngine>>("Кольцово");
-			FillAeroport(3, 2, aer);
-			aer.PrintAviation();
-			Console.WriteLine();
-			//Вывод количества свободных мест во всех воздушных судах
-			Console.WriteLine("Всего свободных мест: " + aer.PrintSomeInfo(FreePlace));
-			Console.WriteLine();
-			//Вывод количества топлива, необходимого всем судам
-			Console.WriteLine("Всего необходимо топлива: " + aer.PrintSomeInfo(FuelNeed) + " литров");
-			Console.WriteLine();
-			///Проверить все двигатели
-			aer.DoSmth(CheckEngine);
-			Console.WriteLine();
-			Console.WriteLine("Сортировка по модели двигателя:");
-			aer.Sort(SortByFreePlaces);
-			aer.PrintAviation();
-			Console.WriteLine();
-			Random r = new Random();
-			foreach (var avia in aer)
-			{
-				
-				avia.PlacePassenger(r.Next(20));
-			}
-			Console.WriteLine();
-			Console.WriteLine("Сортировка по количеству свободных мест");
-			aer.Sort(SortByFreePlaces);
-			aer.PrintAviation();
+			FillAeroport(3, 0, aer);
+			var consLogger = new ConsoleLogger<IPassengerAviation<IEngine>>(aer[0]);
+			var fileLogger = new FileLoggerr<IPassengerAviation<IEngine>>(aer[1], "log1.txt");
+			var fileLogger2 = new FileLoggerr<IPassengerAviation<IEngine>>(aer[0], "log1.txt");
+
+			consLogger.OnLog += LogOnLog;
+			fileLogger.OnLog += LogOnLog;
+			fileLogger2.OnLog += LogOnLog;
+
+			aer[0].PlacePassenger(10);
+			aer[1].SendMessage(aer[0], "Освобождаю взлетную полосу");
+			aer[1].DropOffPassenger();
+			aer[0].MakeFlight(Routs.Cities.Moscow, Routs.Cities.Omsk);
+
 			Console.ReadKey();
 		}
 
+		/// <summary>
+		/// Метод печати лога
+		/// </summary>
+		/// <param name="writer">Цель вывода</param>
+		/// <param name="avia">Логгируемое судно</param>
+		/// <param name="args">Аргументы события</param>
+		public static void LogOnLog(TextWriter writer, IPassengerAviation<IEngine> avia, AviaEventArgs args)
+		{
+			string toPrint = "";
+			switch (args.EventType)
+			{
+				case EventTypes.Flight:
+					toPrint = "Судно " + avia.Model + " летит из " + (args as AviaFlightEventArgs).From + " в " + (args as AviaFlightEventArgs).To;
+					break;
+				case EventTypes.PassIn:
+					toPrint = "На судно " + avia.Model + " садятся " + (args as AviaPassInEventArgs).Count + " пассажиров";
+					break;
+				case EventTypes.PassOut:
+					toPrint = "Из " + avia.Model + " вышли все пассажиры";
+					break;
+				case EventTypes.SendingMessage:
+					toPrint = "Судно " + avia.Model + " послало для " + (args as AviaSendMessEventArgs).Target.Model + " сообщение: " +
+							  (args as AviaSendMessEventArgs).Message;
+					break;
+			}
+			writer.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " " + toPrint);
+		}
+		/// <summary>
+		/// Заполнение аэропорта случайными судами по указанному количеству
+		/// </summary>
+		/// <param name="planes">Количество самолетов</param>
+		/// <param name="helicopters">Количество вертолетов</param>
+		/// <param name="_aviation">Аэропорт</param>
 		public static void FillAeroport(int planes, int helicopters, IAeroport<IPassengerAviation<IEngine>> _aviation)
 		{
 			IAviationFactory aaf = new AmericanAviationFactory();

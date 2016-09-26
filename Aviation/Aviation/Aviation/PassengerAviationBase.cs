@@ -1,5 +1,6 @@
 ﻿using System;
 using Aviation.Engines;
+using Aviation.Loggers;
 
 namespace Aviation.Aviation
 {
@@ -8,6 +9,10 @@ namespace Aviation.Aviation
 	/// </summary>
 	public abstract class PassengerAviationBase<T> : IPassengerAviation<T> where T: IEngine
 	{
+		public virtual event Action<AviaFlightEventArgs> OnFlight;
+		public event Action<AviaPassInEventArgs> OnPassIn;
+		public event Action<AviaEventArgs> OnPassOff;
+		public event Action<AviaSendMessEventArgs> OnSendingMessage;
 		public int Capacity { get; private set; }
 		public int Engaged { get; private set; }
 		public int TankCapacity { get; private set; }
@@ -20,25 +25,37 @@ namespace Aviation.Aviation
 			if (Capacity <= Engaged + count)
 			{
 				Engaged = Capacity;
-				Console.WriteLine("Судно {0} заполнено!", Model);
+				//Console.WriteLine("Судно {0} заполнено!", Model);
 			}
 			else
 			{
 				Engaged += count;
-				Console.WriteLine("На судне {0} занято {1} мест из {2}",Model, Engaged, Capacity);
+				//Console.WriteLine("На судне {0} занято {1} мест из {2}",Model, Engaged, Capacity);
+			}
+			if (OnPassIn != null)
+			{
+				OnPassIn(new AviaPassInEventArgs(count));
 			}
 		}
 
 		public void DropOffPassenger()
 		{
 			Engaged = 0;
-			Console.WriteLine("Все пассажиры из {0} высажены!", Model);
+			//Console.WriteLine("Все пассажиры из {0} высажены!", Model);
+			if (OnPassOff != null)
+			{
+				OnPassOff(new AviaEventArgs(EventTypes.PassOut));
+			}
 		}
 
 		public void SendMessage(IPassengerAviation<IEngine> target, string mes)
 		{
-			Console.WriteLine("{0} послал сообщение для {1}", Model, target.Model);
+			//Console.WriteLine("{0} послал сообщение для {1}", Model, target.Model);
 			target.ReceiveMessage(mes);
+			if (OnSendingMessage != null)
+			{
+				OnSendingMessage(new AviaSendMessEventArgs(target, mes));
+			}
 		}
 
 		public void ReceiveMessage(string mes)

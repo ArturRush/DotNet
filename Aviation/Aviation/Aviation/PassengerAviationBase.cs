@@ -1,5 +1,6 @@
 ﻿using System;
 using Aviation.Engines;
+using Aviation.Exeptions;
 using Aviation.Loggers;
 
 namespace Aviation.Aviation
@@ -7,7 +8,7 @@ namespace Aviation.Aviation
 	/// <summary>
 	/// Базовый класс авиации
 	/// </summary>
-	public abstract class PassengerAviationBase<T> : IPassengerAviation<T> where T: IEngine
+	public abstract class PassengerAviationBase<T> : IPassengerAviation<T> where T : IEngine
 	{
 		public virtual event Action<AviaFlightEventArgs> OnFlight;
 		public event Action<AviaPassInEventArgs> OnPassIn;
@@ -22,6 +23,8 @@ namespace Aviation.Aviation
 
 		public void PlacePassenger(int count)
 		{
+			if(count<=0)
+				throw new PassPlaceException("Некорректное количество пассажиров - " + count);
 			if (Capacity <= Engaged + count)
 			{
 				Engaged = Capacity;
@@ -50,6 +53,8 @@ namespace Aviation.Aviation
 
 		public void SendMessage(IPassengerAviation<IEngine> target, string mes)
 		{
+			if(target == null)
+				throw new NoTargetExeption("Цель сообщения не определена");
 			//Console.WriteLine("{0} послал сообщение для {1}", Model, target.Model);
 			target.ReceiveMessage(mes);
 			if (OnSendingMessage != null)

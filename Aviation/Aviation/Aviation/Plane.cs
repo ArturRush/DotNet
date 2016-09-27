@@ -26,13 +26,9 @@ namespace Aviation.Aviation
 		{
 			if (Routs.GetDistance(from, to) >= TankCapacity*100/Engine.Consumption)
 			{
-				//Console.WriteLine("{0} не хватит топлива до пункта назначения", Model);
 				return;
 			}
-			//Console.WriteLine("{0} готов к взлету", Model);
-			//Console.WriteLine("Включить двигатель {0}", Engine.Model);
 			Engine.Move();
-			//Console.WriteLine("{0} приземляется на взлетную полосу", Model);
 			if (OnFlight != null)
 			{
 				OnFlight(new AviaFlightEventArgs(from,to));

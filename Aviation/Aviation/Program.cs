@@ -5,6 +5,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using Aviation.Engines;
 using Aviation.Aviation;
+using Aviation.Exeptions;
 using Aviation.Factories;
 using Aviation.Loggers;
 
@@ -14,21 +15,61 @@ namespace Aviation
 	{
 		static void Main(string[] args)
 		{
+			ExceptionLogger.ToFile = false;
 			IAeroport<IPassengerAviation<IEngine>> aer = new Aeroport<IPassengerAviation<IEngine>>("Кольцово");
-			FillAeroport(3, 0, aer);
-			var consLogger = new ConsoleLogger<IPassengerAviation<IEngine>>(aer[0]);
-			var fileLogger = new FileLoggerr<IPassengerAviation<IEngine>>(aer[1], "log1.txt");
-			var fileLogger2 = new FileLoggerr<IPassengerAviation<IEngine>>(aer[0], "log1.txt");
-
-			consLogger.OnLog += LogOnLog;
-			fileLogger.OnLog += LogOnLog;
-			fileLogger2.OnLog += LogOnLog;
-
-			aer[0].PlacePassenger(10);
-			aer[1].SendMessage(aer[0], "Освобождаю взлетную полосу");
-			aer[1].DropOffPassenger();
-			aer[0].MakeFlight(Routs.Cities.Moscow, Routs.Cities.Omsk);
-
+			FillAeroport(6, 8, aer);
+			aer.PrintAviation();
+			Console.WriteLine();
+			Random r = new Random();
+			foreach (var avia in aer)
+			{
+				avia.PlacePassenger(r.Next(20));
+			}
+			//aer.PrintAviation();
+			Console.WriteLine();
+			Console.WriteLine("Сортировка по количеству свободных мест");
+			aer.Sorter = PancakeSort;
+			//aer.Comparer = SortByFreePlaces;
+			aer.Sort();//Системное исключение - Comparer == null
+			aer.Comparer = SortByFreePlaces;
+			aer.Sort();
+			aer.PrintAviation();
+			try
+			{
+				aer[0].PlacePassenger(-5);
+			}
+			catch (UserException usEx)
+			{
+				ExceptionLogger.LogUserException(usEx);
+			}
+			catch (Exception ex)
+			{
+				ExceptionLogger.LogSystemException(ex);
+			}
+			try
+			{
+				aer[0].SendMessage(aer[30], "Не сработает, нет такого элемента, системное исключение");
+			}
+			catch (UserException usEx)
+			{
+				ExceptionLogger.LogUserException(usEx);
+			}
+			catch (Exception ex)
+			{
+				ExceptionLogger.LogSystemException(ex);
+			}
+			try
+			{
+				aer[0].SendMessage(null, "Не сработает, нет  цели, пользовательское исключение");
+			}
+			catch (UserException usEx)
+			{
+				ExceptionLogger.LogUserException(usEx);
+			}
+			catch (Exception ex)
+			{
+				ExceptionLogger.LogSystemException(ex);
+			}
 			Console.ReadKey();
 		}
 
@@ -147,6 +188,49 @@ namespace Aviation
 		public static int SortByEngineModel(IPassengerAviation<IEngine> a, IPassengerAviation<IEngine> b)
 		{
 			return String.Compare(a.Engine.Model, b.Engine.Model, StringComparison.Ordinal);
+		}
+		/// <summary>
+		/// Блинная сортировка
+		/// </summary>
+		/// <typeparam name="T">Обобщение</typeparam>
+		/// <param name="arr">Список сравниваемых объектов</param>
+		/// <param name="comparer">Метод для сравнения двух элементов</param>
+		public static void PancakeSort<T>(List<T> arr, Func<T,T,int> comparer)
+		{
+			for (int i = arr.Count - 1; i >= 0; --i)
+			{
+				int pos = i;
+				for (int j = 0; j < i; j++)
+				{
+					if (comparer(arr[j], arr[pos]) > 0)
+					{
+						pos = j;
+					}
+				}
+
+				if (pos == i)
+				{
+					continue;
+				}
+
+				if (pos != 0)
+				{
+					Flip(arr, pos + 1);
+				}
+
+				Flip(arr, i + 1);
+			}
+		}
+
+		private static void Flip<T>(List<T> arr, int n)
+		{
+			for (int i = 0; i < n; i++)
+			{
+				--n;
+				T tmp = arr[i];
+				arr[i] = arr[n];
+				arr[n] = tmp;
+			}
 		}
 	}
 }

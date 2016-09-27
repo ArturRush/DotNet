@@ -10,6 +10,14 @@ namespace Aviation.Aviation
 	interface IAeroport<T> : ICollection<T> where T : IPassengerAviation<IEngine>
 	{
 		/// <summary>
+		/// Метод сортировки коллекции
+		/// </summary>
+		Aeroport<T>.MySorter Sorter { get; set; }
+		/// <summary>
+		/// Метод сравнения элементов для сортировки
+		/// </summary>
+		Func<T, T, int> Comparer { get; set; }
+		/// <summary>
 		/// Возвращает судно из аэропорта по индексу
 		/// </summary>
 		/// <param name="ind">Индекс</param>
@@ -32,8 +40,7 @@ namespace Aviation.Aviation
 		/// <summary>
 		/// Сортировка коллекции по заданному условию
 		/// </summary>
-		/// <param name="sorter">Функция сравнения двух элементов</param>
-		void Sort(Comparison<T> sorter);
+		void Sort();
 
 		/// <summary>
 		/// Выполняет указанное действие для всех элементов коллекции

@@ -4,16 +4,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Aviation.Engines;
+using Aviation.Exeptions;
 using Aviation.Factories;
+using Aviation.Loggers;
 
 namespace Aviation.Aviation
 {
 	/// <summary>
 	/// Аэропорт
 	/// </summary>
-	class Aeroport<T> : IAeroport<T> where T : IPassengerAviation<IEngine> 
+	class Aeroport<T> : IAeroport<T> where T : IPassengerAviation<IEngine>
 	{
 		private readonly List<T> _aviation;
+
+		public delegate void MySorter(List<T> toSort, Func<T, T, int> comparer);
+		public MySorter Sorter { get; set; }
+		public Func<T, T, int> Comparer { get; set; }
 
 		public T this[int ind]
 		{
@@ -88,35 +94,26 @@ namespace Aviation.Aviation
 
 		public void PrintAviation()
 		{
-			int planesCount = 0;
-			int heliCount = 0;
-			Console.WriteLine("Самолеты в аэропорту:");
 			foreach (var avia in _aviation)
 			{
-				if (avia.GetType() == typeof(Plane<ITurbopropEngine>) || avia.GetType() == typeof(Plane<IReactiveEngine>))
-				{
-					Console.WriteLine("Самолет {0}, занято {1} мест из {2}", avia.Model, avia.Engaged, avia.Capacity);
-					++planesCount;
-				}
+				Console.WriteLine("Судно {0}, мест свободно: {1}", avia.Model, avia.Capacity - avia.Engaged);
 			}
-			Console.WriteLine("Всего {0} шт.", planesCount);
-
-			Console.WriteLine("Вертолеты в аэропорту:");
-			foreach (var avia in _aviation)
-			{
-				if (avia.GetType() == typeof(Helicopter<IGasTurbineEngine>))
-				{
-					Console.WriteLine("Вертолет {0}, занято {1} мест из {2}", avia.Model, avia.Engaged, avia.Capacity);
-					++heliCount;
-				}
-			}
-			Console.WriteLine("Всего {0} шт.", heliCount);
-
 		}
 
-		public void Sort(Comparison<T> sorter)
+		public void Sort()
 		{
-			_aviation.Sort(sorter);
+			try
+			{
+				Sorter(_aviation, Comparer);
+			}
+			catch (UserException userEx)
+			{
+				ExceptionLogger.LogUserException(userEx);
+			}
+			catch (Exception ex)
+			{
+				ExceptionLogger.LogSystemException(ex);
+			}
 		}
 
 		public void DoSmth(Action<T> smth)

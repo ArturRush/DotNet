@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Aviation.Aviation;
 using Aviation.Engines;
@@ -36,23 +37,34 @@ namespace Aviation.Loggers
 
 			if (!File.Exists(filePath))
 			{
-				var fs = File.Create(filePath); 
+				var fs = File.Create(filePath);
 				fs.Close();
 			}
 		}
+		/// <summary>
+		/// Объект синхронизации
+		/// </summary>
+		private readonly object threadLock = new object();
+
 		/// <summary>
 		/// Метод обработчика событий
 		/// </summary>
 		/// <param name="args">Аргументы события</param>
 		private void AviaEventHandler(AviaEventArgs args)
 		{
-			using (var writer = File.AppendText(_filePath))
+			Thread thread = new Thread(() =>
 			{
-				if (OnLog != null)
+				lock (threadLock)
 				{
-					OnLog(writer, _avia, args);
+					using (var writer = File.AppendText(_filePath))
+					{
+						if (OnLog != null)
+						{
+							OnLog(writer, _avia, args);
+						}
+					}
 				}
-			}
+			});
 		}
 	}
 }

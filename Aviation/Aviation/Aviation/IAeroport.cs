@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using Aviation.Engines;
 
 namespace Aviation.Aviation
@@ -17,6 +19,11 @@ namespace Aviation.Aviation
 		/// Метод сравнения элементов для сортировки
 		/// </summary>
 		Func<T, T, int> Comparer { get; set; }
+		/// <summary>
+		/// Медот отображения прогресса сортировки
+		/// </summary>
+		Action<int> Progressor { get; set; }
+
 		/// <summary>
 		/// Возвращает судно из аэропорта по индексу
 		/// </summary>
@@ -38,7 +45,7 @@ namespace Aviation.Aviation
 		void PrintAviation();
 
 		/// <summary>
-		/// Сортировка коллекции по заданному условию
+		/// Сортировка коллекции по заданному условию. Требует указать для коллекции Sorter и Comparer
 		/// </summary>
 		void Sort();
 
@@ -54,5 +61,15 @@ namespace Aviation.Aviation
 		/// <param name="takeInfo">Функция подсчета</param>
 		/// <returns>Сумма значений</returns>
 		int PrintSomeInfo(Func<T, int> takeInfo);
+
+		/// <summary>
+		/// Прогресс сортировки
+		/// </summary>
+		int SortProgress { get;}
+
+		/// <summary>
+		/// Асинхронная блинная сортировка. Требует указать для коллекции Comparer
+		/// </summary>
+		Task SortAsynk();
 	}
 }

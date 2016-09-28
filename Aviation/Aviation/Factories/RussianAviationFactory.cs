@@ -22,7 +22,9 @@ namespace Aviation.Factories
 		private readonly List<string> _rusHelicopters = new List<string>();
 		private readonly List<string> _rusPlanes = new List<string>();
 
-
+		/// <summary>
+		/// Конструктор по умолчанию, ведется загрузка данных из фалов
+		/// </summary>
 		public RussianAviationFactory()
 		{
 			try

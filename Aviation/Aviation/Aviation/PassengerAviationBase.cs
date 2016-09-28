@@ -23,7 +23,7 @@ namespace Aviation.Aviation
 
 		public void PlacePassenger(int count)
 		{
-			if(count<=0)
+			if(count<0)
 				throw new PassPlaceException("Некорректное количество пассажиров - " + count);
 			if (Capacity <= Engaged + count)
 			{

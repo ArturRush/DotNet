@@ -2,7 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Aviation.Engines;
 using Aviation.Exeptions;
 using Aviation.Factories;
@@ -20,6 +23,7 @@ namespace Aviation.Aviation
 		public delegate void MySorter(List<T> toSort, Func<T, T, int> comparer);
 		public MySorter Sorter { get; set; }
 		public Func<T, T, int> Comparer { get; set; }
+		public Action<int> Progressor { get; set; }
 
 		public T this[int ind]
 		{
@@ -30,6 +34,7 @@ namespace Aviation.Aviation
 		public Aeroport(string name)
 		{
 			Name = name;
+			SortProgress = 0;
 			_aviation = new List<T>();
 		}
 
@@ -127,6 +132,39 @@ namespace Aviation.Aviation
 		public int PrintSomeInfo(Func<T, int> takeInfo)
 		{
 			return _aviation.Sum(takeInfo);
+		}
+
+		public int SortProgress { get; private set; }
+
+		public async Task SortAsynk()
+		{
+			await Task.Run(() =>
+			{
+				for (int i = 0; i < _aviation.Count; ++i)
+				{
+					for (int j = 0; j < _aviation.Count; ++j)
+					{
+						if (Comparer(_aviation[i], _aviation[j]) > 0)
+							Swap(i,j);
+					}
+					SortProgress = i*100/_aviation.Count;
+					Progressor(SortProgress);
+				}
+				Progressor(100);
+				Console.WriteLine("\nСортировка завершена");
+				SortProgress = 0;
+			});
+		}
+		/// <summary>
+		/// Обмен пары элементов коллекции местами
+		/// </summary>
+		/// <param name="i">Первый элемент</param>
+		/// <param name="j">Второй элемент</param>
+		private void Swap(int i, int j)
+		{
+			T temp = _aviation[i];
+			_aviation[i] = _aviation[j];
+			_aviation[j] = temp;
 		}
 	}
 }

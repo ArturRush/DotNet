@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
+using System.Threading;
+using System.Threading.Tasks;
 using Aviation.Engines;
 using Aviation.Aviation;
 using Aviation.Exeptions;
@@ -15,7 +17,8 @@ namespace Aviation
 	{
 		static void Main(string[] args)
 		{
-			ExceptionLogger.ToFile = false;
+			//================================= 5 лаба ====================================================
+			ExceptionLogger.ToFile = true;
 			IAeroport<IPassengerAviation<IEngine>> aer = new Aeroport<IPassengerAviation<IEngine>>("Кольцово");
 			FillAeroport(6, 8, aer);
 			aer.PrintAviation();
@@ -70,7 +73,29 @@ namespace Aviation
 			{
 				ExceptionLogger.LogSystemException(ex);
 			}
-			Console.ReadKey();
+			//================================= 6 лаба ====================================================
+			//IAeroport<IPassengerAviation<IEngine>> aer = new Aeroport<IPassengerAviation<IEngine>>("Кольцово");
+			//FillAeroport(1000, 1000, aer);
+			////aer.PrintAviation();
+			////Console.WriteLine();
+			//Random r = new Random();
+			//foreach (var avia in aer)
+			//{
+			//	avia.PlacePassenger(r.Next(80));
+			//}
+			//aer.Sorter = PancakeSort;
+			//aer.Comparer = SortByFreePlaces;
+			//aer.Progressor = SortProgress;
+			////aer.SortAsynk();
+			//Task t = aer.SortAsynk();
+			//t.Wait();
+			////aer.PrintAviation();
+			//Console.ReadKey();
+		}
+
+		private static void SortProgress(int pr)
+		{
+			Console.Write("\rПрогресс: {0}%", pr);
 		}
 
 		/// <summary>
@@ -144,15 +169,15 @@ namespace Aviation
 			}
 		}
 
-		/// <summary>
-		/// Проверка двигателя воздушного судна
-		/// </summary>
-		/// <param name="avia">Воздушное судно</param>
-		public static void CheckEngine(IPassengerAviation<IEngine> avia)
-		{
-			ICheckEngine<IEngine> checker = new EngineChecker();
-			checker.Check(avia.Engine);
-		}
+		///// <summary>
+		///// Проверка двигателя воздушного судна
+		///// </summary>
+		///// <param name="avia">Воздушное судно</param>
+		//public static void CheckEngine(IPassengerAviation<IEngine> avia)
+		//{
+		//	ICheckEngine<IEngine> checker = new EngineChecker();
+		//	checker.Check(avia.Engine);
+		//}
 
 		/// <summary>
 		/// Свободные места судна

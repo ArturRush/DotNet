@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using Aviation.Aviation;
 using Aviation.Engines;
 
@@ -8,9 +9,8 @@ namespace Aviation.Loggers
 	/// <summary>
 	/// Консольный логгер
 	/// </summary>
-	class ConsoleLogger<T> : ILogger<T> where T: IPassengerAviation<IEngine>
+	class ConsoleLogger<T> : ILogger<T> where T : IPassengerAviation<IEngine>
 	{
-
 		public event Action<TextWriter, T, AviaEventArgs> OnLog;
 		/// <summary>
 		/// Экземпляр авиации, для которого ведется логгирование
@@ -29,18 +29,29 @@ namespace Aviation.Loggers
 			_avia.OnSendingMessage += AviaEventHandler;
 		}
 		/// <summary>
+		/// Объект синхронизации
+		/// </summary>
+		private readonly object threadLock = new object();
+
+		/// <summary>
 		/// Метод обработчика событий
 		/// </summary>
 		/// <param name="args">Аргументы события</param>
 		private void AviaEventHandler(AviaEventArgs args)
 		{
-			using (var writer = Console.Out)
+			Thread thread = new Thread(() =>
 			{
-				if (OnLog != null)
+				lock (threadLock)
 				{
-					OnLog(writer, _avia, args);
+					using (var writer = Console.Out)
+					{
+						if (OnLog != null)
+						{
+							OnLog(writer, _avia, args);
+						}
+					}
 				}
-			}
+			});
 		}
 	}
 }

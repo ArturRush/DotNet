@@ -9,12 +9,17 @@ namespace Aviation.Engines
 	/// <summary>
 	/// Самолетный двигатель
 	/// </summary>
+	[Serializable]
 	public class PlaneEngine : EngineBase, IPlaneEngine
 	{
 		protected PlaneEngine(int consumption, string model, int speed) : base(consumption, model, speed)
 		{
 		}
 
+		protected PlaneEngine()
+		{
+			
+		}
 
 		override public void Move()
 		{

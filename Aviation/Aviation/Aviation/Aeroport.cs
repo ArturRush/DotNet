@@ -16,26 +16,33 @@ namespace Aviation.Aviation
 	/// <summary>
 	/// Аэропорт
 	/// </summary>
-	class Aeroport<T> : IAeroport<T> where T : IPassengerAviation<IEngine>
+	[Serializable]
+	public class Aeroport<T> : IAeroport<T> where T : IPassengerAviation<IEngine>
 	{
-		private readonly List<T> _aviation;
+		public readonly List<T> Aviation;
 
 		public delegate void MySorter(List<T> toSort, Func<T, T, int> comparer);
 		public MySorter Sorter { get; set; }
 		public Func<T, T, int> Comparer { get; set; }
 		public Action<int> Progressor { get; set; }
-
 		public T this[int ind]
 		{
-			get { return _aviation[ind]; }
-			set { _aviation[ind] = value; }
+			get { return Aviation[ind]; }
+			set { Aviation[ind] = value; }
 		}
 
 		public Aeroport(string name)
 		{
 			Name = name;
 			SortProgress = 0;
-			_aviation = new List<T>();
+			Aviation = new List<T>();
+		}
+
+		public Aeroport(string name, List<T> aviation )
+		{
+			Name = name;
+			SortProgress = 0;
+			Aviation = aviation;
 		}
 
 		public string Name { get; private set; }
@@ -52,32 +59,32 @@ namespace Aviation.Aviation
 
 		public void Add(T item)
 		{
-			_aviation.Add(item);
+			Aviation.Add(item);
 		}
 
 		public void Clear()
 		{
-			_aviation.Clear();
+			Aviation.Clear();
 		}
 
 		public bool Contains(T item)
 		{
-			return _aviation.Contains(item);
+			return Aviation.Contains(item);
 		}
 
 		public void CopyTo(T[] array, int arrayIndex)
 		{
-			_aviation.CopyTo(array, arrayIndex);
+			Aviation.CopyTo(array, arrayIndex);
 		}
 
 		public bool Remove(T item)
 		{
-			return _aviation.Remove(item);
+			return Aviation.Remove(item);
 		}
 
 		public int Count
 		{
-			get { return _aviation.Count; }
+			get { return Aviation.Count; }
 		}
 
 		public bool IsReadOnly
@@ -87,8 +94,8 @@ namespace Aviation.Aviation
 
 		public T GetAvia(int peoples, int distance)
 		{
-			var temp = _aviation[0].Capacity >= peoples && distance <= _aviation[0].TankCapacity * 100 / _aviation[0].Engine.Consumption ? _aviation[0] : default(T);
-			foreach (var avia in _aviation)
+			var temp = Aviation[0].Capacity >= peoples && distance <= Aviation[0].TankCapacity * 100 / Aviation[0].Engine.Consumption ? Aviation[0] : default(T);
+			foreach (var avia in Aviation)
 			{
 				if (avia.Capacity >= peoples && distance <= avia.TankCapacity * 100 / avia.Engine.Consumption
 					&& (temp == null || (avia.Capacity <= temp.Capacity && avia.TankCapacity <= temp.TankCapacity)))
@@ -99,7 +106,7 @@ namespace Aviation.Aviation
 
 		public void PrintAviation()
 		{
-			foreach (var avia in _aviation)
+			foreach (var avia in Aviation)
 			{
 				Console.WriteLine("Судно {0}, мест свободно: {1}", avia.Model, avia.Capacity - avia.Engaged);
 			}
@@ -109,7 +116,7 @@ namespace Aviation.Aviation
 		{
 			try
 			{
-				Sorter(_aviation, Comparer);
+				Sorter(Aviation, Comparer);
 			}
 			catch (UserException userEx)
 			{
@@ -123,7 +130,7 @@ namespace Aviation.Aviation
 
 		public void DoSmth(Action<T> smth)
 		{
-			foreach (var avia in _aviation)
+			foreach (var avia in Aviation)
 			{
 				smth(avia);
 			}
@@ -131,7 +138,7 @@ namespace Aviation.Aviation
 
 		public int PrintSomeInfo(Func<T, int> takeInfo)
 		{
-			return _aviation.Sum(takeInfo);
+			return Aviation.Sum(takeInfo);
 		}
 
 		public int SortProgress { get; private set; }
@@ -140,14 +147,14 @@ namespace Aviation.Aviation
 		{
 			await Task.Run(() =>
 			{
-				for (int i = 0; i < _aviation.Count; ++i)
+				for (int i = 0; i < Aviation.Count; ++i)
 				{
-					for (int j = 0; j < _aviation.Count; ++j)
+					for (int j = 0; j < Aviation.Count; ++j)
 					{
-						if (Comparer(_aviation[i], _aviation[j]) > 0)
+						if (Comparer(Aviation[i], Aviation[j]) > 0)
 							Swap(i,j);
 					}
-					SortProgress = i*100/_aviation.Count;
+					SortProgress = i*100/Aviation.Count;
 					Progressor(SortProgress);
 				}
 				Progressor(100);
@@ -162,9 +169,9 @@ namespace Aviation.Aviation
 		/// <param name="j">Второй элемент</param>
 		private void Swap(int i, int j)
 		{
-			T temp = _aviation[i];
-			_aviation[i] = _aviation[j];
-			_aviation[j] = temp;
+			T temp = Aviation[i];
+			Aviation[i] = Aviation[j];
+			Aviation[j] = temp;
 		}
 	}
 }

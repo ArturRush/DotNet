@@ -9,7 +9,7 @@ namespace Aviation.Aviation
 	/// <summary>
 	/// Интерфейс аэропортов
 	/// </summary>
-	interface IAeroport<T> : ICollection<T> where T : IPassengerAviation<IEngine>
+	public interface IAeroport<T> : ICollection<T> where T : IPassengerAviation<IEngine>
 	{
 		/// <summary>
 		/// Метод сортировки коллекции

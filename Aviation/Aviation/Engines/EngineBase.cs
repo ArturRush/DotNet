@@ -9,14 +9,15 @@ namespace Aviation.Engines
 	/// <summary>
 	/// Базовый класс двигателей
 	/// </summary>
+	[Serializable]
 	public abstract class EngineBase : IEngine
 	{
 		public enum Direction { Forward, Backward, Right, Left, Up, Down}
-		public int Consumption { get; private set; }
+		public int Consumption { get; set; }
 
-		public string Model { get; private set; }
+		public string Model { get; set; }
 
-		public int Speed { get; private set; }
+		public int Speed { get; set; }
 
 		public virtual void Move()
 		{
@@ -28,11 +29,20 @@ namespace Aviation.Engines
 			Console.WriteLine("Новая скорость {0} км/ч", newSpeed);
 		}
 
+		public void Fly()
+		{
+		}
+
 		protected EngineBase(int consumption, string model, int speed)
 		{
 			Consumption = consumption;
 			Model = model;
 			Speed = speed;
+		}
+
+		protected EngineBase()
+		{
+			
 		}
 	}
 }

@@ -16,9 +16,9 @@ namespace Aviation.Factories
 	/// </summary>
 	class RussianAviationFactory : IAviationFactory
 	{
-		readonly IReactiveEngine _tuReactiveEngine = new ReactiveEngine("НК-32");
-		readonly IGasTurbineEngine _miGasTurbineEngine = new GasTurbineEngine("ДКП-13");
-		readonly ITurbopropEngine _tuTurboPropEngine = new TurbopropEngine("ДР-13");
+		readonly ReactiveEngine _tuReactiveEngine = new ReactiveEngine("НК-32");
+		readonly GasTurbineEngine _miGasTurbineEngine = new GasTurbineEngine("ДКП-13");
+		readonly TurbopropEngine _tuTurboPropEngine = new TurbopropEngine("ДР-13");
 		private readonly List<string> _rusHelicopters = new List<string>();
 		private readonly List<string> _rusPlanes = new List<string>();
 
@@ -62,9 +62,9 @@ namespace Aviation.Factories
 		{
 			Random r = new Random();
 			if (_rusHelicopters.Count <= 0)
-				return new Helicopter<IGasTurbineEngine>(4, 500, "Ми-3", _miGasTurbineEngine);
+				return new Helicopter<GasTurbineEngine>(4, 500, "Ми-3", _miGasTurbineEngine);
 
-			return new Helicopter<IGasTurbineEngine>(4, 500, _rusHelicopters[r.Next(_rusHelicopters.Count - 1)], _miGasTurbineEngine);
+			return new Helicopter<GasTurbineEngine>(4, 500, _rusHelicopters[r.Next(_rusHelicopters.Count - 1)], _miGasTurbineEngine);
 		}
 
 		/// <summary>
@@ -75,9 +75,9 @@ namespace Aviation.Factories
 		{
 			Random r = new Random();
 			if (_rusPlanes.Count <= 0)
-				return new Plane<IReactiveEngine>(120, 50000, "ТУ-160", _tuReactiveEngine);
+				return new Plane<ReactiveEngine>(120, 50000, "ТУ-160", _tuReactiveEngine);
 
-			return new Plane<IReactiveEngine>(120, 50000, _rusPlanes[r.Next(_rusPlanes.Count-1)], _tuReactiveEngine);
+			return new Plane<ReactiveEngine>(120, 50000, _rusPlanes[r.Next(_rusPlanes.Count-1)], _tuReactiveEngine);
 		}
 
 		/// <summary>
@@ -88,9 +88,9 @@ namespace Aviation.Factories
 		{
 			Random r = new Random();
 			if (_rusPlanes.Count <= 0)
-				return new Plane<ITurbopropEngine>(80, 45000, "ТУ-95", _tuTurboPropEngine);
+				return new Plane<TurbopropEngine>(80, 45000, "ТУ-95", _tuTurboPropEngine);
 
-			return new Plane<ITurbopropEngine>(80, 45000, _rusPlanes[r.Next(_rusPlanes.Count-1)], _tuTurboPropEngine);
+			return new Plane<TurbopropEngine>(80, 45000, _rusPlanes[r.Next(_rusPlanes.Count-1)], _tuTurboPropEngine);
 		}
 	}
 }

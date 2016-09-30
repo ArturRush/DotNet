@@ -9,6 +9,7 @@ namespace Aviation.Engines
 	/// <summary>
 	/// Газотурбинный двигатель
 	/// </summary>
+	[Serializable]
 	public class GasTurbineEngine : HelicopterEngine, IGasTurbineEngine
 	{
 		private const int GasTurbineEngineSpeed = 200;
@@ -16,6 +17,11 @@ namespace Aviation.Engines
 
 		public GasTurbineEngine(string model) : base(GasTurbineEngineConsumption, model, GasTurbineEngineSpeed)
 		{
+		}
+
+		public GasTurbineEngine()
+		{
+			
 		}
 	}
 }

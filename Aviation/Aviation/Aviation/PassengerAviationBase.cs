@@ -8,18 +8,19 @@ namespace Aviation.Aviation
 	/// <summary>
 	/// Базовый класс авиации
 	/// </summary>
+	[Serializable]
 	public abstract class PassengerAviationBase<T> : IPassengerAviation<T> where T : IEngine
 	{
 		public virtual event Action<AviaFlightEventArgs> OnFlight;
 		public event Action<AviaPassInEventArgs> OnPassIn;
 		public event Action<AviaEventArgs> OnPassOff;
 		public event Action<AviaSendMessEventArgs> OnSendingMessage;
-		public int Capacity { get; private set; }
-		public int Engaged { get; private set; }
-		public int TankCapacity { get; private set; }
-		public string Model { get; private set; }
+		public int Capacity { get; set; }
+		public int Engaged { get; set; }
+		public int TankCapacity { get; set; }
+		public string Model { get; set; }
 
-		public T Engine { get; private set; }
+		public T Engine { get; set; }
 
 		public void PlacePassenger(int count)
 		{
@@ -68,7 +69,7 @@ namespace Aviation.Aviation
 			Console.WriteLine("На судне {0} получено сообщение: {1}", Model, mes);
 		}
 
-		virtual public void MakeFlight(Routs.Cities from, Routs.Cities to)
+		public virtual void MakeFlight(Routs.Cities from, Routs.Cities to)
 		{
 			
 		}
@@ -82,6 +83,9 @@ namespace Aviation.Aviation
 			Engaged = 0;
 		}
 
+		protected PassengerAviationBase()
+		{ }
+		
 		public abstract object Clone();
 	}
 }

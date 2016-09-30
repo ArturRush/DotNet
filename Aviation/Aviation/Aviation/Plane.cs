@@ -7,6 +7,7 @@ namespace Aviation.Aviation
 	/// <summary>
 	/// Самолет
 	/// </summary>
+	[Serializable]
 	public class Plane<T> : PassengerAviationBase<T>, IPlane<T> where T : IPlaneEngine
 	{
 		public event Action<AviaFlightEventArgs> OnFlight;
@@ -16,6 +17,8 @@ namespace Aviation.Aviation
 		{
 			
 		}
+		public Plane()
+		{ }
 
 		public IEngine Engine
 		{

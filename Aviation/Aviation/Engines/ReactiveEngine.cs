@@ -9,6 +9,7 @@ namespace Aviation.Engines
 	/// <summary>
 	/// Реактивный двигатель
 	/// </summary>
+	[Serializable]
 	public class ReactiveEngine : PlaneEngine, IReactiveEngine
 	{
 		private const int ReactiveEngineSpeed = 1000;
@@ -16,6 +17,11 @@ namespace Aviation.Engines
 
 		public ReactiveEngine(string model) : base(ReactiveEngineConsumption, model, ReactiveEngineSpeed)
 		{
+		}
+
+		public ReactiveEngine()
+		{
+			
 		}
 	}
 }

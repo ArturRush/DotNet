@@ -1,96 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Policy;
-using System.Threading;
-using System.Threading.Tasks;
 using Aviation.Engines;
 using Aviation.Aviation;
-using Aviation.Exeptions;
-using Aviation.Factories;
 using Aviation.Loggers;
+using Aviation.Serializer;
 
 namespace Aviation
 {
 	class Program
 	{
-		static void Main(string[] args)
+		public static void Main(string[] args)
 		{
-			//================================= 5 лаба ====================================================
-			ExceptionLogger.ToFile = true;
-			IAeroport<IPassengerAviation<IEngine>> aer = new Aeroport<IPassengerAviation<IEngine>>("Кольцово");
-			FillAeroport(6, 8, aer);
-			aer.PrintAviation();
-			Console.WriteLine();
-			Random r = new Random();
-			foreach (var avia in aer)
-			{
-				avia.PlacePassenger(r.Next(20));
-			}
-			//aer.PrintAviation();
-			Console.WriteLine();
-			Console.WriteLine("Сортировка по количеству свободных мест");
-			aer.Sorter = PancakeSort;
-			//aer.Comparer = SortByFreePlaces;
-			aer.Sort();//Системное исключение - Comparer == null
+			//====================================== 7 лаба ==================================================
+			var aer = new Aeroport<Plane<ReactiveEngine>>("Кольцово");
+			FillAerWithReactivePlanes(aer, 10);
 			aer.Comparer = SortByFreePlaces;
-			aer.Sort();
+			var binSer = new BinarySerializer<Plane<ReactiveEngine>>();
+			var xmlSer = new XmlCustomSerializer<Plane<ReactiveEngine>>();
+			var jsonSer = new JsonSerializer<Plane<ReactiveEngine>>();
+
+			//Сериализация в бинарник
+			binSer.Serialize(aer, "aerBinary.dat");
 			aer.PrintAviation();
-			try
+			aer = binSer.Deserialize("aerBinary.dat");
+			Console.WriteLine("После десериализации");
+			aer.PrintAviation();
+
+			////Сериализация в XML
+			xmlSer.Serialize(aer, "aerXML.xml");
+			aer.PrintAviation();
+			aer = xmlSer.Deserialize("aerXML.xml");
+			Console.WriteLine("После десериализации");
+			aer.PrintAviation();
+
+			////Сериализация в JSON
+			jsonSer.Serialize(aer, "aerjson.json");
+			aer.PrintAviation();
+			aer = jsonSer.Deserialize("aerjson.json");
+			Console.WriteLine("После десериализации");
+			aer.PrintAviation();
+
+			Console.ReadKey();
+		}
+
+		private static void FillAerWithReactivePlanes(Aeroport<Plane<ReactiveEngine>> aer, int planesCount)
+		{
+			for (int i = 0; i < planesCount; ++i)
 			{
-				aer[0].PlacePassenger(-5);
+				aer.Add(new Plane<ReactiveEngine>(100, 20000, "SuperJet", new ReactiveEngine("DoublePower")));
 			}
-			catch (UserException usEx)
-			{
-				ExceptionLogger.LogUserException(usEx);
-			}
-			catch (Exception ex)
-			{
-				ExceptionLogger.LogSystemException(ex);
-			}
-			try
-			{
-				aer[0].SendMessage(aer[30], "Не сработает, нет такого элемента, системное исключение");
-			}
-			catch (UserException usEx)
-			{
-				ExceptionLogger.LogUserException(usEx);
-			}
-			catch (Exception ex)
-			{
-				ExceptionLogger.LogSystemException(ex);
-			}
-			try
-			{
-				aer[0].SendMessage(null, "Не сработает, нет  цели, пользовательское исключение");
-			}
-			catch (UserException usEx)
-			{
-				ExceptionLogger.LogUserException(usEx);
-			}
-			catch (Exception ex)
-			{
-				ExceptionLogger.LogSystemException(ex);
-			}
-			//================================= 6 лаба ====================================================
-			//IAeroport<IPassengerAviation<IEngine>> aer = new Aeroport<IPassengerAviation<IEngine>>("Кольцово");
-			//FillAeroport(1000, 1000, aer);
-			////aer.PrintAviation();
-			////Console.WriteLine();
-			//Random r = new Random();
-			//foreach (var avia in aer)
-			//{
-			//	avia.PlacePassenger(r.Next(80));
-			//}
-			//aer.Sorter = PancakeSort;
-			//aer.Comparer = SortByFreePlaces;
-			//aer.Progressor = SortProgress;
-			////aer.SortAsynk();
-			//Task t = aer.SortAsynk();
-			//t.Wait();
-			////aer.PrintAviation();
-			//Console.ReadKey();
 		}
 
 		private static void SortProgress(int pr)
@@ -125,49 +84,7 @@ namespace Aviation
 			}
 			writer.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " " + toPrint);
 		}
-		/// <summary>
-		/// Заполнение аэропорта случайными судами по указанному количеству
-		/// </summary>
-		/// <param name="planes">Количество самолетов</param>
-		/// <param name="helicopters">Количество вертолетов</param>
-		/// <param name="_aviation">Аэропорт</param>
-		public static void FillAeroport(int planes, int helicopters, IAeroport<IPassengerAviation<IEngine>> _aviation)
-		{
-			IAviationFactory aaf = new AmericanAviationFactory();
-			IAviationFactory raf = new RussianAviationFactory();
-
-			Random r = new Random();
-			int americanPlanes = r.Next(planes);
-			int russianHelicopters = r.Next(helicopters);
-
-			for (int i = 0; i < planes - americanPlanes; ++i)
-			{
-				int reactive = r.Next(2);
-				if (reactive == 1)
-					_aviation.Add(raf.CreateReactivePlane());
-				else
-					_aviation.Add(raf.CreateTurbopropPlane());
-			}
-
-			for (int i = 0; i < americanPlanes; ++i)
-			{
-				int reactive = r.Next(2);
-				if (reactive == 1)
-					_aviation.Add(aaf.CreateReactivePlane());
-				else
-					_aviation.Add(aaf.CreateTurbopropPlane());
-			}
-
-			for (int i = 0; i < russianHelicopters; ++i)
-			{
-				_aviation.Add(raf.CreateHelicopter());
-			}
-
-			for (int i = 0; i < helicopters - russianHelicopters; ++i)
-			{
-				_aviation.Add(aaf.CreateHelicopter());
-			}
-		}
+		
 
 		///// <summary>
 		///// Проверка двигателя воздушного судна

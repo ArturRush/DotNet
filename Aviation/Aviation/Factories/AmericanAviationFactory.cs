@@ -13,9 +13,9 @@ namespace Aviation.Factories
 	/// </summary>
 	class AmericanAviationFactory : IAviationFactory
 	{
-		readonly IReactiveEngine _boeingReactiveEngine = new ReactiveEngine("GE90");
-		readonly IGasTurbineEngine _robinsonGasTurbineEngine = new GasTurbineEngine("RobS5W");
-		readonly ITurbopropEngine _b2TurbopropEngine = new TurbopropEngine("ST5");
+		readonly ReactiveEngine _boeingReactiveEngine = new ReactiveEngine("GE90");
+		readonly GasTurbineEngine _robinsonGasTurbineEngine = new GasTurbineEngine("RobS5W");
+		readonly TurbopropEngine _b2TurbopropEngine = new TurbopropEngine("ST5");
 
 		/// <summary>
 		/// Создать американский реактивный самолет
@@ -23,7 +23,7 @@ namespace Aviation.Factories
 		/// <returns>Американский реактивный самолет</returns>
 		public IPassengerAviation<IPlaneEngine> CreateReactivePlane()
 		{
-			return new Plane<IReactiveEngine>(80, 40000, "777", _boeingReactiveEngine);
+			return new Plane<ReactiveEngine>(80, 40000, "777", _boeingReactiveEngine);
 		}
 
 		/// <summary>
@@ -32,7 +32,7 @@ namespace Aviation.Factories
 		/// <returns>Американский турбовинтовой самолет</returns>
 		public IPassengerAviation<IPlaneEngine> CreateTurbopropPlane()
 		{
-			return new Plane<ITurbopropEngine>(70, 35000, "B52", _b2TurbopropEngine);
+			return new Plane<TurbopropEngine>(70, 35000, "B52", _b2TurbopropEngine);
 		}
 
 
@@ -42,7 +42,7 @@ namespace Aviation.Factories
 		/// <returns>Американский вертолет</returns>
 		public IPassengerAviation<IHelicopterEngine> CreateHelicopter()
 		{
-			return new Helicopter<IGasTurbineEngine>(6, 550, "R22", _robinsonGasTurbineEngine);
+			return new Helicopter<GasTurbineEngine>(6, 550, "R22", _robinsonGasTurbineEngine);
 		}
 	}
 }

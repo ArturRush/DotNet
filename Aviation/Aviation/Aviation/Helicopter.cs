@@ -7,6 +7,7 @@ namespace Aviation.Aviation
 	/// <summary>
 	/// Вертолет
 	/// </summary>
+	[Serializable]
 	public class Helicopter<T> : PassengerAviationBase<T>, IHelicopter<T> where T: IHelicopterEngine
 	{
 		public event Action<AviaFlightEventArgs> OnFlight;
@@ -16,6 +17,8 @@ namespace Aviation.Aviation
 		{
 			
 		}
+		public Helicopter()
+		{ }
 
 		public IEngine Engine
 		{

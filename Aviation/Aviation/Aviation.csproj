@@ -32,6 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -65,6 +72,7 @@
     <Compile Include="Engines\ReactiveEngine.cs" />
     <Compile Include="Engines\TurbopropEngine.cs" />
     <Compile Include="Exeptions\UserExeption.cs" />
+    <Compile Include="Factories\RandomAviationGenerator.cs" />
     <Compile Include="Factories\RussianAviationFactory.cs" />
     <Compile Include="Factories\IAviationFactory.cs" />
     <Compile Include="Factories\AmericanAviationFactory.cs" />
@@ -76,10 +84,16 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routs.cs" />
+    <Compile Include="Serializer\AeroportWrapper.cs" />
+    <Compile Include="Serializer\BinarySerializer.cs" />
+    <Compile Include="Serializer\ISerializer.cs" />
+    <Compile Include="Serializer\JSONSerializer.cs" />
+    <Compile Include="Serializer\XmlCustomSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="ClassDiagram_Lab5.cd" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

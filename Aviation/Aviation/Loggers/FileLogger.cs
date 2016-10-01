@@ -10,7 +10,7 @@ using Aviation.Engines;
 
 namespace Aviation.Loggers
 {
-	class FileLoggerr<T> : ILogger<T> where T : IPassengerAviation<IEngine>
+	public class FileLogger<T> : ILogger<T> where T : IPassengerAviation<IEngine>
 	{
 		public event Action<TextWriter, T, AviaEventArgs> OnLog;
 		/// <summary>
@@ -26,7 +26,7 @@ namespace Aviation.Loggers
 		/// </summary>
 		/// <param name="avia">Логгируемый экземпляр авиации</param>
 		/// <param name="filePath">Путь к файлу</param>
-		public FileLoggerr(T avia, string filePath)
+		public FileLogger(T avia, string filePath)
 		{
 			_avia = avia;
 			_filePath = filePath;

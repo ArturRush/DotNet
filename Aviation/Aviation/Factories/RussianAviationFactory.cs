@@ -14,7 +14,7 @@ namespace Aviation.Factories
 	/// <summary>
 	/// Фабрика русской авиации
 	/// </summary>
-	class RussianAviationFactory : IAviationFactory
+	public class RussianAviationFactory : IAviationFactory
 	{
 		readonly ReactiveEngine _tuReactiveEngine = new ReactiveEngine("НК-32");
 		readonly GasTurbineEngine _miGasTurbineEngine = new GasTurbineEngine("ДКП-13");
@@ -31,10 +31,6 @@ namespace Aviation.Factories
 			{
 				_rusHelicopters = File.ReadLines("RussianHelicopters.txt").ToList();
 			}
-			catch (UserException userEx)
-			{
-				ExceptionLogger.LogUserException(userEx);
-			}
 			catch (Exception ex)
 			{
 				ExceptionLogger.LogSystemException(ex);
@@ -43,10 +39,6 @@ namespace Aviation.Factories
 			try
 			{
 				_rusPlanes = (List<string>)File.ReadLines("RussianPlanes.txt");
-			}
-			catch (UserException userEx)
-			{
-				ExceptionLogger.LogUserException(userEx);
 			}
 			catch (Exception ex)
 			{

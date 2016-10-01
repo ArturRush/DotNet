@@ -38,7 +38,7 @@ namespace Aviation.Aviation
 			Aviation = new List<T>();
 		}
 
-		public Aeroport(string name, List<T> aviation )
+		public Aeroport(string name, List<T> aviation)
 		{
 			Name = name;
 			SortProgress = 0;
@@ -152,12 +152,14 @@ namespace Aviation.Aviation
 					for (int j = 0; j < Aviation.Count; ++j)
 					{
 						if (Comparer(Aviation[i], Aviation[j]) > 0)
-							Swap(i,j);
+							Swap(i, j);
 					}
-					SortProgress = i*100/Aviation.Count;
-					Progressor(SortProgress);
+					SortProgress = i * 100 / Aviation.Count;
+					if (Progressor != null)
+						Progressor(SortProgress);
 				}
-				Progressor(100);
+				if (Progressor != null)
+					Progressor(100);
 				Console.WriteLine("\nСортировка завершена");
 				SortProgress = 0;
 			});

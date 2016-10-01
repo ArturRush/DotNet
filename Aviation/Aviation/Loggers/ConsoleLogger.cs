@@ -9,7 +9,7 @@ namespace Aviation.Loggers
 	/// <summary>
 	/// Консольный логгер
 	/// </summary>
-	class ConsoleLogger<T> : ILogger<T> where T : IPassengerAviation<IEngine>
+	public class ConsoleLogger<T> : ILogger<T> where T : IPassengerAviation<IEngine>
 	{
 		public event Action<TextWriter, T, AviaEventArgs> OnLog;
 		/// <summary>

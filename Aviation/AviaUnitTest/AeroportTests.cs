@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Runtime.Remoting.Messaging;
+using System.Threading.Tasks;
 using Aviation.Aviation;
 using Aviation.Engines;
 using Aviation.Exeptions;
@@ -17,6 +18,9 @@ namespace AviaUnitTest
 	public class AeroportTests
 	{
 		private List<IPassengerAviation<IEngine>> aviation;
+		/// <summary>
+		/// Инициирующая функция для заполнения листа
+		/// </summary>
 		[SetUp]
 		public void Init()
 		{
@@ -30,7 +34,9 @@ namespace AviaUnitTest
 			};
 		}
 
-
+		/// <summary>
+		/// Тест создания аэропорта по имени
+		/// </summary>
 		[Test]
 		public void CreateTest1()
 		{
@@ -43,6 +49,9 @@ namespace AviaUnitTest
 			Assert.AreEqual(null, aerTest.Progressor);
 		}
 
+		/// <summary>
+		/// Тест создания аэропорта по имени и листу авиации
+		/// </summary>
 		[Test]
 		public void CreateTest2()
 		{
@@ -56,7 +65,9 @@ namespace AviaUnitTest
 			Assert.AreEqual(aviation,aerTest.Aviation);
 		}
 
-
+		/// <summary>
+		/// Тест взятия элемента по индексу
+		/// </summary>
 		[Test]
 		public void IndexTest()
 		{
@@ -64,7 +75,9 @@ namespace AviaUnitTest
 			var aer = new Aeroport<IPassengerAviation<IEngine>>(name, aviation);
 			Assert.AreEqual(aer[0], aviation[0]);
 		}
-
+		/// <summary>
+		/// Тест возврата количества воздушных суден в коллекции
+		/// </summary>
 		[Test]
 		public void CountItemsTest()
 		{
@@ -72,7 +85,9 @@ namespace AviaUnitTest
 			var aer = new Aeroport<IPassengerAviation<IEngine>>(name, aviation);
 			Assert.AreEqual(aviation.Count, aer.Count);
 		}
-
+		/// <summary>
+		/// Тест добавления элемента
+		/// </summary>
 		[Test]
 		public void AddItemTest()
 		{
@@ -82,7 +97,9 @@ namespace AviaUnitTest
 			aer.Add(tmp);
 			Assert.AreEqual(tmp, aer[aer.Count-1]);
 		}
-
+		/// <summary>
+		/// Тест очистки коллекции
+		/// </summary>
 		[Test]
 		public void ClearAeroportTest()
 		{
@@ -91,7 +108,9 @@ namespace AviaUnitTest
 			aer.Clear();
 			Assert.AreEqual(0,aer.Count);
 		}
-
+		/// <summary>
+		/// Тест проверки на присутствие элемента в коллекции
+		/// </summary>
 		[Test]
 		public void ContainsItemTest()
 		{
@@ -103,7 +122,9 @@ namespace AviaUnitTest
 			Assert.AreEqual(false, aer.Contains(notInAer));
 			Assert.AreEqual(true, aer.Contains(inAer));
 		}
-
+		/// <summary>
+		/// Тест удаления элемента из коллекции
+		/// </summary>
 		[Test]
 		public void RemoveItemTest()
 		{
@@ -114,18 +135,21 @@ namespace AviaUnitTest
 			aer.Remove(tmp);
 			Assert.AreEqual(false, aer.Contains(tmp));
 		}
-
+		/// <summary>
+		/// Тест подбора элемента из коллекции
+		/// </summary>
 		[Test]
 		public void GetAviaTest()
 		{
 			string name = "TestName";
 			var aer = new Aeroport<IPassengerAviation<IEngine>>(name, aviation);
 			var tmp1 = aer.GetAvia(0, 0);
-			var tmp2 = aer.GetAvia(200, 200);
 
-			Assert.AreEqual(aer[0], tmp1);
+			Assert.AreEqual(aer[aer.Count-1], tmp1);
 		}
-
+		/// <summary>
+		/// Тест вывода списка элементов коллекции
+		/// </summary>
 		[Test]
 		public void PrintTest()
 		{
@@ -133,7 +157,9 @@ namespace AviaUnitTest
 			var aer = new Aeroport<IPassengerAviation<IEngine>>(name, aviation);
 			Assert.DoesNotThrow(()=>aer.PrintAviation());
 		}
-
+		/// <summary>
+		/// Тест синхронной сортировки коллекции
+		/// </summary>
 		[Test]
 		public void SortTest()
 		{
@@ -141,6 +167,11 @@ namespace AviaUnitTest
 			var aer = new Aeroport<IPassengerAviation<IEngine>>(name, aviation);
 			
 			Assert.DoesNotThrow(() => aer.Sort());
+			bool sorted = true;
+			for (int i = 1; i < aer.Count; ++i)
+				if (aer[i].Engaged > aer[i - 1].Engaged)
+					sorted = false;
+			Assert.AreEqual(true, sorted);
 		}
 		[Test]
 		public void SortAsyncTest()
@@ -150,17 +181,22 @@ namespace AviaUnitTest
 			Random r = new Random();
 			foreach (var avia in aer)
 			{
-				avia.PlacePassenger(r.Next(10));
+				avia.PlacePassenger(r.Next(100));
 			}
 			aer.Comparer = (a, b) => a.Engaged.CompareTo(b.Engaged);
+			//aer.PrintAviation();
+			Task t = new Task(() => aer.SortAsynk());
+			t.Start();
+			t.Wait();
 			bool sorted = true;
-
 			for (int i = 1; i < aer.Count; ++i)
-				if (aer[i].Engaged < aer[i - 1].Engaged)
+				if (aer[i].Engaged > aer[i - 1].Engaged)
 					sorted = false;
 			Assert.AreEqual(true, sorted);
 		}
-
+		/// <summary>
+		/// Тест функции принимающей делегат Action
+		/// </summary>
 		[Test]
 		public void DoSmthTest()
 		{
@@ -169,7 +205,9 @@ namespace AviaUnitTest
 
 			Assert.DoesNotThrow(()=>aer.DoSmth((a)=>a.PlacePassenger(1)));
 		}
-
+		/// <summary>
+		/// Тест функции принимающей делегат Func
+		/// </summary>
 		[Test]
 		public void PrintSomeInfoTest()
 		{

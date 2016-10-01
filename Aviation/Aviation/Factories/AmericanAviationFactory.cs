@@ -11,7 +11,7 @@ namespace Aviation.Factories
 	/// <summary>
 	/// Фабрика американской авиации
 	/// </summary>
-	class AmericanAviationFactory : IAviationFactory
+	public class AmericanAviationFactory : IAviationFactory
 	{
 		readonly ReactiveEngine _boeingReactiveEngine = new ReactiveEngine("GE90");
 		readonly GasTurbineEngine _robinsonGasTurbineEngine = new GasTurbineEngine("RobS5W");

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aviation.Engines
 {
-	class EngineChecker : ICheckEngine<IEngine>
+	public class EngineChecker : ICheckEngine<IEngine>
 	{
 		public void Check(IEngine obj)
 		{

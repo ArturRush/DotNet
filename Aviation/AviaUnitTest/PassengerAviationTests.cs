@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aviation;
 using Aviation.Aviation;
 using Aviation.Engines;
+using Aviation.Exeptions;
 using NUnit.Framework;
 
 namespace AviaUnitTest
 {
+	/// <summary>
+	/// Тестирование классов авиации
+	/// </summary>
 	[TestFixture]
 	class PassengerAviationTests
 	{
@@ -19,9 +24,11 @@ namespace AviaUnitTest
 		private ReactiveEngine reEngine;
 		private TurbopropEngine turEngine;
 		private GasTurbineEngine hEngine;
-
+		/// <summary>
+		/// Инициирующая функция
+		/// </summary>
 		[SetUp]
-		private void Init()
+		public void Init()
 		{
 			cap = 10;
 			capTank = 100;
@@ -31,9 +38,11 @@ namespace AviaUnitTest
 			turEngine = new TurbopropEngine("react");
 			hEngine = new GasTurbineEngine("gastour");
 		}
-
+		/// <summary>
+		/// Тестирование создания экземпляров авиации
+		/// </summary>
 		[Test]
-		private void CreateTest()
+		public void CreateTest()
 		{
 			var a1 = new Plane<ReactiveEngine>(cap, capTank, model, reEngine);
 			var a2 = new Plane<TurbopropEngine>(cap, capTank, model, turEngine);
@@ -47,14 +56,16 @@ namespace AviaUnitTest
 			Assert.AreEqual(reEngine, a1.Engine);
 			Assert.AreEqual(capTank, a2.TankCapacity);
 			Assert.AreEqual(model, a2.Model);
-			Assert.AreEqual(reEngine, a2.Engine);
+			Assert.AreEqual(turEngine, a2.Engine);
 			Assert.AreEqual(capTank, a3.TankCapacity);
 			Assert.AreEqual(model, a3.Model);
-			Assert.AreEqual(reEngine, a3.Engine);
+			Assert.AreEqual(hEngine, a3.Engine);
 		}
-
+		/// <summary>
+		/// Тестирование посадки пассажиров
+		/// </summary>
 		[Test]
-		private void PlacePassengerTest()
+		public void PlacePassengerTest()
 		{
 			var a1 = new Plane<ReactiveEngine>(cap, capTank, model, reEngine);
 			var a2 = new Plane<TurbopropEngine>(cap, capTank, model, turEngine);
@@ -63,27 +74,65 @@ namespace AviaUnitTest
 			a2.PlacePassenger(20);
 			
 			Assert.AreEqual(a1.Engaged, 5);
-			Assert.AreEqual(a1.Engaged, cap);
-			Assert.Throws<Exception>(()=>a3.PlacePassenger(-3));
+			Assert.AreEqual(a2.Engaged, cap);
+			Assert.Throws<PassPlaceException>(()=>a3.PlacePassenger(-3));
 		}
-
+		/// <summary>
+		/// Тестирование высадки пассажиров
+		/// </summary>
 		[Test]
-		private void DropOffPassTest()
+		public void DropOffPassTest()
 		{
 			var a1 = new Plane<ReactiveEngine>(cap, capTank, model, reEngine);
 			a1.PlacePassenger(5);
 			a1.DropOffPassenger();
 			Assert.AreEqual(0, a1.Engaged);
 		}
-
+		/// <summary>
+		/// Тестирование посылки сообщения
+		/// </summary>
 		[Test]
-		private void SendMessTest()
+		public void SendMessTest()
 		{
 			var a1 = new Plane<ReactiveEngine>(cap, capTank, model, reEngine);
 			var a2 = new Plane<TurbopropEngine>(cap, capTank, model, turEngine);
 
 			Assert.DoesNotThrow(()=>a1.SendMessage(a2, "test"));
-			Assert.Throws<Exception>(() => a1.SendMessage(null, "test"));
+			Assert.DoesNotThrow(()=>a2.ReceiveMessage("fdsfsdf"));
+			Assert.Throws<NoTargetExeption>(() => a1.SendMessage(null, "test"));
+		}
+		/// <summary>
+		/// Тестирование совершения полета
+		/// </summary>
+		/// <param name="from">Откуда</param>
+		/// <param name="to">Куда</param>
+		[TestCase(Routs.Cities.Denver, Routs.Cities.Moscow)]
+		[TestCase(Routs.Cities.Cherlak, Routs.Cities.Omsk)]
+		[TestCase(Routs.Cities.Kazan, Routs.Cities.Kazan)]
+		public void MakeFlightTest(Routs.Cities from, Routs.Cities to)
+		{
+			var a1 = new Plane<ReactiveEngine>(cap, capTank, model, reEngine);
+			var a3 = new Helicopter<GasTurbineEngine>(cap, capTank, model, hEngine);
+			Assert.DoesNotThrow(()=>a1.MakeFlight(from,to));
+			Assert.DoesNotThrow(()=>a3.MakeFlight(from,to));
+		}
+		/// <summary>
+		/// Тестирование клонирования элемента
+		/// </summary>
+		[Test]
+		public void CloneTest()
+		{
+			var a1 = new Plane<ReactiveEngine>(cap, capTank, model, reEngine);
+			var a3 = new Helicopter<GasTurbineEngine>(cap, capTank, model, hEngine);
+			Plane<ReactiveEngine> a2 = (Plane<ReactiveEngine>)a1.Clone();
+			Helicopter<GasTurbineEngine> a4 = (Helicopter<GasTurbineEngine>)a3.Clone();
+			Assert.AreEqual(a1.Capacity, a2.Capacity);
+			Assert.AreEqual(a1.TankCapacity, a2.TankCapacity);
+			Assert.AreEqual(a1.Engine, a2.Engine);
+			Assert.AreEqual(a3.Capacity, a4.Capacity);
+			Assert.AreEqual(a3.TankCapacity, a4.TankCapacity);
+			Assert.AreEqual(a3.Engine, a4.Engine);
+			
 		}
 	}
 }

@@ -54,7 +54,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AeroportTests.cs" />
+    <Compile Include="EngineTests.cs" />
+    <Compile Include="FactoriesTests.cs" />
+    <Compile Include="LoggersTests.cs" />
+    <Compile Include="PassengerAviationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializersTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

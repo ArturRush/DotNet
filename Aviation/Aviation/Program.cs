@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Aviation.Engines;
 using Aviation.Aviation;
 using Aviation.Loggers;
@@ -13,33 +14,33 @@ namespace Aviation
 		public static void Main(string[] args)
 		{
 			//====================================== 7 лаба ==================================================
-			var aer = new Aeroport<Plane<ReactiveEngine>>("Кольцово");
-			FillAerWithReactivePlanes(aer, 10);
-			aer.Comparer = SortByFreePlaces;
-			var binSer = new BinarySerializer<Plane<ReactiveEngine>>();
-			var xmlSer = new XmlCustomSerializer<Plane<ReactiveEngine>>();
-			var jsonSer = new JsonSerializer<Plane<ReactiveEngine>>();
+			//var aer = new Aeroport<Plane<ReactiveEngine>>("Кольцово");
+			//FillAerWithReactivePlanes(aer, 10);
+			//aer.Comparer = SortByFreePlaces;
+			//var binSer = new BinarySerializer<Plane<ReactiveEngine>>();
+			//var xmlSer = new XmlCustomSerializer<Plane<ReactiveEngine>>();
+			//var jsonSer = new JsonSerializer<Plane<ReactiveEngine>>();
 
-			//Сериализация в бинарник
-			binSer.Serialize(aer, "aerBinary.dat");
-			aer.PrintAviation();
-			aer = binSer.Deserialize("aerBinary.dat");
-			Console.WriteLine("После десериализации");
-			aer.PrintAviation();
+			////Сериализация в бинарник
+			//binSer.Serialize(aer, "aerBinary.dat");
+			//aer.PrintAviation();
+			//aer = binSer.Deserialize("aerBinary.dat");
+			//Console.WriteLine("После десериализации");
+			//aer.PrintAviation();
 
-			////Сериализация в XML
-			xmlSer.Serialize(aer, "aerXML.xml");
-			aer.PrintAviation();
-			aer = xmlSer.Deserialize("aerXML.xml");
-			Console.WriteLine("После десериализации");
-			aer.PrintAviation();
+			//////Сериализация в XML
+			//xmlSer.Serialize(aer, "aerXML.xml");
+			//aer.PrintAviation();
+			//aer = xmlSer.Deserialize("aerXML.xml");
+			//Console.WriteLine("После десериализации");
+			//aer.PrintAviation();
 
-			////Сериализация в JSON
-			jsonSer.Serialize(aer, "aerjson.json");
-			aer.PrintAviation();
-			aer = jsonSer.Deserialize("aerjson.json");
-			Console.WriteLine("После десериализации");
-			aer.PrintAviation();
+			//////Сериализация в JSON
+			//jsonSer.Serialize(aer, "aerjson.json");
+			//aer.PrintAviation();
+			//aer = jsonSer.Deserialize("aerjson.json");
+			//Console.WriteLine("После десериализации");
+			//aer.PrintAviation();
 
 			Console.ReadKey();
 		}
@@ -84,7 +85,7 @@ namespace Aviation
 			}
 			writer.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " " + toPrint);
 		}
-		
+
 
 		///// <summary>
 		///// Проверка двигателя воздушного судна
@@ -137,7 +138,7 @@ namespace Aviation
 		/// <typeparam name="T">Обобщение</typeparam>
 		/// <param name="arr">Список сравниваемых объектов</param>
 		/// <param name="comparer">Метод для сравнения двух элементов</param>
-		public static void PancakeSort<T>(List<T> arr, Func<T,T,int> comparer)
+		public static void PancakeSort<T>(List<T> arr, Func<T, T, int> comparer)
 		{
 			for (int i = arr.Count - 1; i >= 0; --i)
 			{

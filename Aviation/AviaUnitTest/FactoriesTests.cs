@@ -39,15 +39,24 @@ namespace AviaUnitTest
 			var rh = rf.CreateHelicopter();
 			var rt = rf.CreateTurbopropPlane();
 			var rr = rf.CreateReactivePlane();
+			Assert.AreEqual(ah.GetType(), typeof(Helicopter<GasTurbineEngine>));
+			Assert.AreEqual(at.GetType(), typeof(Plane<TurbopropEngine>));
+			Assert.AreEqual(ar.GetType(), typeof(Plane<ReactiveEngine>));
+			Assert.AreEqual(rh.GetType(), typeof(Helicopter<GasTurbineEngine>));
+			Assert.AreEqual(rt.GetType(), typeof(Plane<TurbopropEngine>));
+			Assert.AreEqual(rr.GetType(), typeof(Plane<ReactiveEngine>));
 		}
 		/// <summary>
 		/// Проверка заполнения аэропорта случайной авиацией
 		/// </summary>
-		[Test]
-		public void AeroGeneratorTest()
+		[TestCase(10,20)]
+		[TestCase(10,0)]
+		[TestCase(0,20)]
+		public void AeroGeneratorTest(int planeCount, int heliCount)
 		{
 			var aer = new Aeroport<IPassengerAviation<IEngine>>("Кольцово");
-			RandomAviationGenerator.FillAeroport(10,20,aer);
+			RandomAviationGenerator.FillAeroport(planeCount,heliCount,aer);
+			Assert.AreEqual(aer.Count, planeCount+heliCount);
 		}
 	}
 }

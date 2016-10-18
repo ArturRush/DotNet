@@ -57,7 +57,7 @@ namespace AviaUnitTest
 		{
 			var gas = new GasTurbineEngine("gas");
 			var engChecker = new EngineChecker();
-			engChecker.Check(gas);
+			Assert.DoesNotThrow(()=>engChecker.Check(gas));
 		}
 	}
 }

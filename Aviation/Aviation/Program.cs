@@ -14,33 +14,35 @@ namespace Aviation
 		public static void Main(string[] args)
 		{
 			//====================================== 7 лаба ==================================================
-			//var aer = new Aeroport<Plane<ReactiveEngine>>("Кольцово");
-			//FillAerWithReactivePlanes(aer, 10);
-			//aer.Comparer = SortByFreePlaces;
-			//var binSer = new BinarySerializer<Plane<ReactiveEngine>>();
-			//var xmlSer = new XmlCustomSerializer<Plane<ReactiveEngine>>();
-			//var jsonSer = new JsonSerializer<Plane<ReactiveEngine>>();
+			var aer = new Aeroport<Plane<ReactiveEngine>>("Кольцово");
+			FillAerWithReactivePlanes(aer, 10);
+			aer.Comparer = SortByFreePlaces;
+			var binSer = new BinarySerializer<Plane<ReactiveEngine>>();
+			var xmlSer = new XmlCustomSerializer<Plane<ReactiveEngine>>();
+			var jsonSer = new JsonSerializer<Plane<ReactiveEngine>>();
+			Console.WriteLine("До сериализации");
+			aer.PrintAviation();
 
-			////Сериализация в бинарник
-			//binSer.Serialize(aer, "aerBinary.dat");
+			//Сериализация в бинарник
+			binSer.Serialize(aer, "aerBinary.dat");
 			//aer.PrintAviation();
-			//aer = binSer.Deserialize("aerBinary.dat");
-			//Console.WriteLine("После десериализации");
-			//aer.PrintAviation();
+			aer = binSer.Deserialize("aerBinary.dat");
+			Console.WriteLine("После десериализации из бинарника");
+			aer.PrintAviation();
 
-			//////Сериализация в XML
-			//xmlSer.Serialize(aer, "aerXML.xml");
+			////Сериализация в XML
+			xmlSer.Serialize(aer, "aerXML.xml");
 			//aer.PrintAviation();
-			//aer = xmlSer.Deserialize("aerXML.xml");
-			//Console.WriteLine("После десериализации");
-			//aer.PrintAviation();
+			aer = xmlSer.Deserialize("aerXML.xml");
+			Console.WriteLine("После десериализации из XML");
+			aer.PrintAviation();
 
-			//////Сериализация в JSON
-			//jsonSer.Serialize(aer, "aerjson.json");
+			////Сериализация в JSON
+			jsonSer.Serialize(aer, "aerjson.json");
 			//aer.PrintAviation();
-			//aer = jsonSer.Deserialize("aerjson.json");
-			//Console.WriteLine("После десериализации");
-			//aer.PrintAviation();
+			aer = jsonSer.Deserialize("aerjson.json");
+			Console.WriteLine("После десериализации из JSON");
+			aer.PrintAviation();
 
 			Console.ReadKey();
 		}

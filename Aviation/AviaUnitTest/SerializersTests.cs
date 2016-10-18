@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aviation.Aviation;
+﻿using Aviation.Aviation;
 using Aviation.Engines;
 using Aviation.Serializer;
 using NUnit.Framework;
@@ -31,23 +26,21 @@ namespace AviaUnitTest
 			{
 				aer.Add(new Plane<ReactiveEngine>(100, 20000, "SuperJet", new ReactiveEngine("DoublePower")));
 			}
-
+			var aerCopy = aer;
 			binSer.Serialize(aer, "aerBinary.dat");
-			aer.PrintAviation();
 			aer = binSer.Deserialize("aerBinary.dat");
-			aer.PrintAviation();
 
 			xmlSer.Serialize(aer, "aerXML.xml");
-			aer.PrintAviation();
 			aer = xmlSer.Deserialize("aerXML.xml");
-			aer.PrintAviation();
 
 
 			jsonSer.Serialize(aer, "aerjson.json");
-			aer.PrintAviation();
 			aer = jsonSer.Deserialize("aerjson.json");
-			aer.PrintAviation();
-
+			for(int i = 0; i<aer.Count; ++i)
+			{
+				Assert.AreEqual(aer.Aviation[i].Model, aerCopy.Aviation[i].Model);
+				Assert.AreEqual(aer.Aviation[i].Capacity, aerCopy.Aviation[i].Capacity);
+			}
 		}
 	}
 }

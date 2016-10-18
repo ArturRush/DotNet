@@ -43,7 +43,7 @@ namespace AviaUnitTest
 			var av = new Plane<ReactiveEngine>(10, 20000, "qwe", new ReactiveEngine("dfs"));
 			try
 			{
-				av.PlacePassenger(-5);
+				Assert.Throws<PassPlaceException>(() => { av.PlacePassenger(-5); });
 			}
 			catch (UserException usEx)
 			{
@@ -53,7 +53,10 @@ namespace AviaUnitTest
 			aer.Add(av);
 			try
 			{
-				av.SendMessage(aer[30], "Не сработает, нет такого элемента, системное исключение");
+				Assert.Throws<Exception>(()=>
+				{
+					av.SendMessage(aer[30], "Не сработает, нет такого элемента, системное исключение");
+				});
 			}
 			catch (Exception ex)
 			{
@@ -61,7 +64,7 @@ namespace AviaUnitTest
 			}
 			try
 			{
-				av.SendMessage(null, "Не сработает, нет  цели, пользовательское исключение");
+				Assert.Throws<NoTargetExeption>(()=> { av.SendMessage(null, "Не сработает, нет  цели, пользовательское исключение"); });
 			}
 			catch (UserException usEx)
 			{

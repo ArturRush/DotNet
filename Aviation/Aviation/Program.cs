@@ -4,177 +4,130 @@ using System.IO;
 using System.Threading.Tasks;
 using Aviation.Engines;
 using Aviation.Aviation;
+using Aviation.Factories;
 using Aviation.Loggers;
 using Aviation.Serializer;
+using Newtonsoft.Json;
+using NUnit.Framework.Internal;
 
 namespace Aviation
 {
 	class Program
 	{
+		private static void FillAer(Aeroport<IPassengerAviation<IEngine>> aer, int planesCount, int heliCount)
+		{
+			IAviationFactory aaf = new AmericanAviationFactory();
+			IAviationFactory raf = new RussianAviationFactory();
+
+			Random r = new Random();
+			int americanPlanes = r.Next(planesCount);
+			int russianHelicopters = r.Next(heliCount);
+
+			for (int i = 0; i < planesCount - americanPlanes; ++i)
+			{
+				int reactive = r.Next(2);
+				if (reactive == 1)
+					aer.Add(raf.CreateReactivePlane());
+				else
+					aer.Add(raf.CreateTurbopropPlane());
+			}
+
+			for (int i = 0; i < americanPlanes; ++i)
+			{
+				int reactive = r.Next(2);
+				if (reactive == 1)
+					aer.Add(aaf.CreateReactivePlane());
+				else
+					aer.Add(aaf.CreateTurbopropPlane());
+			}
+
+			for (int i = 0; i < russianHelicopters; ++i)
+			{
+				aer.Add(raf.CreateHelicopter());
+			}
+
+			for (int i = 0; i < heliCount - russianHelicopters; ++i)
+			{
+				aer.Add(aaf.CreateHelicopter());
+			}
+		}
+
 		public static void Main(string[] args)
 		{
-			//====================================== 7 лаба ==================================================
-			var aer = new Aeroport<Plane<ReactiveEngine>>("Кольцово");
-			FillAerWithReactivePlanes(aer, 10);
-			aer.Comparer = SortByFreePlaces;
-			var binSer = new BinarySerializer<Plane<ReactiveEngine>>();
-			var xmlSer = new XmlCustomSerializer<Plane<ReactiveEngine>>();
-			var jsonSer = new JsonSerializer<Plane<ReactiveEngine>>();
-			Console.WriteLine("До сериализации");
-			aer.PrintAviation();
+			var aer = new Aeroport<IPassengerAviation<IEngine>>("Кольцово");
+			FillAer(aer, 10, 10);
 
-			//Сериализация в бинарник
-			binSer.Serialize(aer, "aerBinary.dat");
-			//aer.PrintAviation();
-			aer = binSer.Deserialize("aerBinary.dat");
-			Console.WriteLine("После десериализации из бинарника");
-			aer.PrintAviation();
+			Console.WriteLine(aer.ConvertToString());
 
-			////Сериализация в XML
-			xmlSer.Serialize(aer, "aerXML.xml");
-			//aer.PrintAviation();
-			aer = xmlSer.Deserialize("aerXML.xml");
-			Console.WriteLine("После десериализации из XML");
-			aer.PrintAviation();
-
-			////Сериализация в JSON
-			jsonSer.Serialize(aer, "aerjson.json");
-			//aer.PrintAviation();
-			aer = jsonSer.Deserialize("aerjson.json");
-			Console.WriteLine("После десериализации из JSON");
-			aer.PrintAviation();
 
 			Console.ReadKey();
 		}
+	}
 
-		private static void FillAerWithReactivePlanes(Aeroport<Plane<ReactiveEngine>> aer, int planesCount)
+	/// <summary>
+	/// Класс расширение
+	/// </summary>
+	public static class AeroportExtension
+	{
+		/// <summary>
+		/// Метод перевода коллекции в json-строку
+		/// </summary>
+		/// <typeparam name="T">Тип обобощенной коллекции</typeparam>
+		/// <param name="aer">Коллекция</param>
+		/// <returns>json-строка с объектами коллекции</returns>
+		public static string ConvertToString<T>(this Aeroport<T> aer) where T : IPassengerAviation<IEngine>
 		{
-			for (int i = 0; i < planesCount; ++i)
+			ExtensionLogger.Log("Вызван метод конвертации коллекции в строку");
+			var wrapper = new AeroportWrapper<T>(aer);
+			return JsonConvert.SerializeObject(wrapper, Formatting.Indented);
+		}
+
+		/// <summary>
+		/// Находит первое вхождение судна, у которого имеется достаточно свободных мест
+		/// </summary>
+		/// <param name="aer">Коллекция</param>
+		/// <returns>Судно, либо null, если таковых не найдено</returns>
+		public static IPassengerAviation<IEngine> FindByFreePlaces(this Aeroport<IPassengerAviation<IEngine>> aer, int places)
+		{
+			ExtensionLogger.Log("Вызван метод поиска пустого судна");
+			foreach (var aero in aer)
 			{
-				aer.Add(new Plane<ReactiveEngine>(100, 20000, "SuperJet", new ReactiveEngine("DoublePower")));
+				if (aero.Capacity - aero.Engaged > places)
+					return aero;
 			}
-		}
-
-		private static void SortProgress(int pr)
-		{
-			Console.Write("\rПрогресс: {0}%", pr);
+			return null;
 		}
 
 		/// <summary>
-		/// Метод печати лога
+		/// Возвращает все пустые воздушные судна из коллекции
 		/// </summary>
-		/// <param name="writer">Цель вывода</param>
-		/// <param name="avia">Логгируемое судно</param>
-		/// <param name="args">Аргументы события</param>
-		public static void LogOnLog(TextWriter writer, IPassengerAviation<IEngine> avia, AviaEventArgs args)
+		/// <typeparam name="T">тип обобщенной коллекции</typeparam>
+		/// <param name="aer">Коллекция пустых самолетов</param>
+		/// <returns></returns>
+		public static Aeroport<T> FindAllEmpty<T>(this Aeroport<T> aer) where T : IPassengerAviation<IEngine>
 		{
-			string toPrint = "";
-			switch (args.EventType)
+			ExtensionLogger.Log("Вызван метод поиска всех пустых суден");
+			var res = new Aeroport<T>("temp");
+			foreach (var aero in aer)
 			{
-				case EventTypes.Flight:
-					toPrint = "Судно " + avia.Model + " летит из " + (args as AviaFlightEventArgs).From + " в " + (args as AviaFlightEventArgs).To;
-					break;
-				case EventTypes.PassIn:
-					toPrint = "На судно " + avia.Model + " садятся " + (args as AviaPassInEventArgs).Count + " пассажиров";
-					break;
-				case EventTypes.PassOut:
-					toPrint = "Из " + avia.Model + " вышли все пассажиры";
-					break;
-				case EventTypes.SendingMessage:
-					toPrint = "Судно " + avia.Model + " послало для " + (args as AviaSendMessEventArgs).Target.Model + " сообщение: " +
-							  (args as AviaSendMessEventArgs).Message;
-					break;
+				if (aero.Engaged == 0)
+					res.Add(aero);
 			}
-			writer.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " " + toPrint);
-		}
+			return res;
+		} 
+	}
 
+	public static class ExtensionLogger
+	{
+		public static string filePath = "";
 
-		///// <summary>
-		///// Проверка двигателя воздушного судна
-		///// </summary>
-		///// <param name="avia">Воздушное судно</param>
-		//public static void CheckEngine(IPassengerAviation<IEngine> avia)
-		//{
-		//	ICheckEngine<IEngine> checker = new EngineChecker();
-		//	checker.Check(avia.Engine);
-		//}
-
-		/// <summary>
-		/// Свободные места судна
-		/// </summary>
-		/// <param name="avia">Воздушное судно</param>
-		/// <returns>Количество свободных мест</returns>
-		public static int FreePlace(IPassengerAviation<IEngine> avia)
+		public static void Log(string mes)
 		{
-			return avia.Capacity - avia.Engaged;
-		}
-
-		/// <summary>
-		/// Количество топлива, необходимое воздушному судну
-		/// </summary>
-		/// <param name="avia">Воздушное судно</param>
-		/// <returns>Количество топлива</returns>
-		public static int FuelNeed(IPassengerAviation<IEngine> avia)
-		{
-			return avia.TankCapacity;
-		}
-
-		/// <summary>
-		/// Сравнение по количеству свободных мест
-		/// </summary>
-		public static int SortByFreePlaces(IPassengerAviation<IEngine> a, IPassengerAviation<IEngine> b)
-		{
-			return FreePlace(a).CompareTo(FreePlace(b));
-		}
-
-		/// <summary>
-		/// Сравнение по модели двигателя
-		/// </summary>
-		public static int SortByEngineModel(IPassengerAviation<IEngine> a, IPassengerAviation<IEngine> b)
-		{
-			return String.Compare(a.Engine.Model, b.Engine.Model, StringComparison.Ordinal);
-		}
-		/// <summary>
-		/// Блинная сортировка
-		/// </summary>
-		/// <typeparam name="T">Обобщение</typeparam>
-		/// <param name="arr">Список сравниваемых объектов</param>
-		/// <param name="comparer">Метод для сравнения двух элементов</param>
-		public static void PancakeSort<T>(List<T> arr, Func<T, T, int> comparer)
-		{
-			for (int i = arr.Count - 1; i >= 0; --i)
+			if(filePath=="")
+				Console.WriteLine(mes);
+			else
 			{
-				int pos = i;
-				for (int j = 0; j < i; j++)
-				{
-					if (comparer(arr[j], arr[pos]) > 0)
-					{
-						pos = j;
-					}
-				}
-
-				if (pos == i)
-				{
-					continue;
-				}
-
-				if (pos != 0)
-				{
-					Flip(arr, pos + 1);
-				}
-
-				Flip(arr, i + 1);
-			}
-		}
-
-		private static void Flip<T>(List<T> arr, int n)
-		{
-			for (int i = 0; i < n; i++)
-			{
-				--n;
-				T tmp = arr[i];
-				arr[i] = arr[n];
-				arr[n] = tmp;
+				File.AppendAllText(filePath, mes);
 			}
 		}
 	}

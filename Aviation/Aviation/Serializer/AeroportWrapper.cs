@@ -16,7 +16,7 @@ namespace Aviation.Serializer
 	/// </summary>
 	[Serializable]
 	[XmlRoot]
-	public class AeroportWrapper<T> where T: IPassengerAviation<IEngine>
+	internal class AeroportWrapper<T> where T: IPassengerAviation<IEngine>
 	{
 		[XmlAttribute] 
 		public string Name { get; set; }

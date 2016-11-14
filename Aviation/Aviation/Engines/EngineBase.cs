@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 namespace Aviation.Engines
 {
 	/// <summary>
+	/// Список направлений движения вертолета
+	/// </summary>
+	public enum Direction { Forward, Backward, Right, Left, Up, Down }
+
+	/// <summary>
 	/// Базовый класс двигателей
 	/// </summary>
 	[Serializable]
-	public abstract class EngineBase : IEngine
+	abstract class EngineBase : IEngine
 	{
-		public enum Direction { Forward, Backward, Right, Left, Up, Down}
 		public int Consumption { get; set; }
 
 		public string Model { get; set; }

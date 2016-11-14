@@ -10,7 +10,7 @@ namespace Aviation.Engines
 	/// Самолетный двигатель
 	/// </summary>
 	[Serializable]
-	public class PlaneEngine : EngineBase, IPlaneEngine
+	internal abstract class PlaneEngine : EngineBase, IPlaneEngine
 	{
 		protected PlaneEngine(int consumption, string model, int speed) : base(consumption, model, speed)
 		{

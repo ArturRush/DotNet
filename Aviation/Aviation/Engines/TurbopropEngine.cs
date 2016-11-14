@@ -10,7 +10,7 @@ namespace Aviation.Engines
 	/// Турбовинтовой двигатель
 	/// </summary>
 	[Serializable]
-	public class TurbopropEngine : PlaneEngine, ITurbopropEngine
+	internal class TurbopropEngine : PlaneEngine, ITurbopropEngine
 	{
 		private const int TurbopropEngineSpeed = 650;
 		private const int TurbopropEngineConsumption = 1000;

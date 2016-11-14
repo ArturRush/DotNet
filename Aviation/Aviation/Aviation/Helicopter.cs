@@ -8,9 +8,9 @@ namespace Aviation.Aviation
 	/// Вертолет
 	/// </summary>
 	[Serializable]
-	public class Helicopter<T> : PassengerAviationBase<T>, IHelicopter<T> where T: IHelicopterEngine
+	internal class Helicopter<T> : PassengerAviationBase<T>, IHelicopter<T> where T: IHelicopterEngine
 	{
-		public event Action<AviaFlightEventArgs> OnFlight;
+		public override event Action<AviaFlightEventArgs> OnFlight;
 
 		public Helicopter(int capacity, int tankCapacity, string model, T engine)
 			: base(capacity, tankCapacity, model, engine)

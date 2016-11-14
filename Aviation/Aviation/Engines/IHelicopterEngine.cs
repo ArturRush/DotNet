@@ -15,6 +15,6 @@ namespace Aviation.Engines
 		/// Указать направление полета
 		/// </summary>
 		/// <param name="to">Направление</param>
-		void FlyTo(EngineBase.Direction to);
+		void FlyTo(Direction to);
 	}
 }

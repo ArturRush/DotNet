@@ -10,7 +10,7 @@ namespace Aviation.Engines
 	/// Реактивный двигатель
 	/// </summary>
 	[Serializable]
-	public class ReactiveEngine : PlaneEngine, IReactiveEngine
+	internal class ReactiveEngine : PlaneEngine, IReactiveEngine
 	{
 		private const int ReactiveEngineSpeed = 1000;
 		private const int ReactiveEngineConsumption = 1500;

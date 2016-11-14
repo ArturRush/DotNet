@@ -9,7 +9,7 @@ namespace Aviation.Aviation
 	/// Базовый класс авиации
 	/// </summary>
 	[Serializable]
-	public abstract class PassengerAviationBase<T> : IPassengerAviation<T> where T : IEngine
+	internal abstract class PassengerAviationBase<T> : IPassengerAviation<T> where T : IEngine
 	{
 		public virtual event Action<AviaFlightEventArgs> OnFlight;
 		public event Action<AviaPassInEventArgs> OnPassIn;

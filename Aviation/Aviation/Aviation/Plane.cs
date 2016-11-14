@@ -10,9 +10,9 @@ namespace Aviation.Aviation
 	/// Самолет
 	/// </summary>
 	[Serializable]
-	public class Plane<T> : PassengerAviationBase<T>, IPlane<T> where T : IPlaneEngine
+	internal class Plane<T> : PassengerAviationBase<T>, IPlane<T> where T : IPlaneEngine
 	{
-		public event Action<AviaFlightEventArgs> OnFlight;
+		public override event Action<AviaFlightEventArgs> OnFlight;
 
 		public Plane(int capacity, int tankCapacity, string model, T engine)
 			: base(capacity, tankCapacity, model, engine)
@@ -22,10 +22,7 @@ namespace Aviation.Aviation
 		public Plane()
 		{ }
 
-		public IEngine Engine
-		{
-			get { return base.Engine; }
-		}
+		public IEngine Engine => base.Engine;
 
 		override public void MakeFlight(Routs.Cities from, Routs.Cities to)
 		{

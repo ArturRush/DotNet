@@ -10,7 +10,7 @@ namespace Aviation.Engines
 	/// Газотурбинный двигатель
 	/// </summary>
 	[Serializable]
-	public class GasTurbineEngine : HelicopterEngine, IGasTurbineEngine
+	internal class GasTurbineEngine : HelicopterEngine, IGasTurbineEngine
 	{
 		private const int GasTurbineEngineSpeed = 200;
 		private const int GasTurbineEngineConsumption = 60;

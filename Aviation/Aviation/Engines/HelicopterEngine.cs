@@ -10,7 +10,7 @@ namespace Aviation.Engines
 	/// Вертолетный двигатель
 	/// </summary>
 	[Serializable]
-	public abstract class HelicopterEngine : EngineBase, IHelicopterEngine
+	internal abstract class HelicopterEngine : EngineBase, IHelicopterEngine
 	{
 		protected HelicopterEngine(int consumption, string model, int speed) : base(consumption, model, speed)
 		{

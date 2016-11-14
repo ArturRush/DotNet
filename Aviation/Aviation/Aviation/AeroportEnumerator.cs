@@ -4,7 +4,7 @@ using Aviation.Engines;
 
 namespace Aviation.Aviation
 {
-	class AeroportEnumerator<T> : IEnumerator<T> where T : IPassengerAviation<IEngine>
+	public class AeroportEnumerator<T> : IEnumerator<T> where T : IPassengerAviation<IEngine>
 	{
 		private readonly IAeroport<T> _aeroport;
 		private int _curIndex;

@@ -1,0 +1,632 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Aviation</name>
+    </assembly>
+    <members>
+        <member name="T:Aviation.Aviation.Aeroport`1">
+            <summary>
+            Аэропорт
+            </summary>
+        </member>
+        <member name="M:Aviation.Aviation.Aeroport`1.Swap(System.Int32,System.Int32)">
+            <summary>
+            Обмен пары элементов коллекции местами
+            </summary>
+            <param name="i">Первый элемент</param>
+            <param name="j">Второй элемент</param>
+        </member>
+        <member name="T:Aviation.Aviation.IAeroport`1">
+            <summary>
+            Интерфейс аэропортов
+            </summary>
+        </member>
+        <member name="P:Aviation.Aviation.IAeroport`1.Sorter">
+            <summary>
+            Метод сортировки коллекции
+            </summary>
+        </member>
+        <member name="P:Aviation.Aviation.IAeroport`1.Comparer">
+            <summary>
+            Метод сравнения элементов для сортировки
+            </summary>
+        </member>
+        <member name="P:Aviation.Aviation.IAeroport`1.Progressor">
+            <summary>
+            Медот отображения прогресса сортировки
+            </summary>
+        </member>
+        <member name="P:Aviation.Aviation.IAeroport`1.Item(System.Int32)">
+            <summary>
+            Возвращает судно из аэропорта по индексу
+            </summary>
+            <param name="ind">Индекс</param>
+            <returns>Воздушное судно</returns>
+        </member>
+        <member name="M:Aviation.Aviation.IAeroport`1.GetAvia(System.Int32,System.Int32)">
+            <summary>
+            Запросить подходящее судно у аэропорта. Возвращает null, если такого нет
+            </summary>
+            <param name="peoples">Количество людей для посадки</param>
+            <param name="distance">Дистанция перелета</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aviation.Aviation.IAeroport`1.PrintAviation">
+            <summary>
+            Получить список воздушных судов аэропорта
+            </summary>
+        </member>
+        <member name="M:Aviation.Aviation.IAeroport`1.Sort">
+            <summary>
+            Сортировка коллекции по заданному условию. Требует указать для коллекции Sorter и Comparer
+            </summary>
+        </member>
+        <member name="M:Aviation.Aviation.IAeroport`1.DoSmth(System.Action{`0})">
+            <summary>
+            Выполняет указанное действие для всех элементов коллекции
+            </summary>
+            <param name="smth">Действие</param>
+        </member>
+        <member name="M:Aviation.Aviation.IAeroport`1.PrintSomeInfo(System.Func{`0,System.Int32})">
+            <summary>
+            Для каждого элемента коллекции складывает значение, возвращаемое переданной функцией
+            </summary>
+            <param name="takeInfo">Функция подсчета</param>
+            <returns>Сумма значений</returns>
+        </member>
+        <member name="P:Aviation.Aviation.IAeroport`1.SortProgress">
+            <summary>
+            Прогресс сортировки
+            </summary>
+        </member>
+        <member name="M:Aviation.Aviation.IAeroport`1.SortAsynk">
+            <summary>
+            Асинхронная блинная сортировка. Требует указать для коллекции Comparer
+            </summary>
+        </member>
+        <member name="T:Aviation.Aviation.PassengerAviationBase`1">
+            <summary>
+            Базовый класс авиации
+            </summary>
+        </member>
+        <member name="T:Aviation.Aviation.Helicopter`1">
+            <summary>
+            Вертолет
+            </summary>
+        </member>
+        <member name="T:Aviation.Aviation.IPassengerAviation`1">
+            <summary>
+            Интерфейс "авиации"
+            </summary>
+        </member>
+        <member name="E:Aviation.Aviation.IPassengerAviation`1.OnFlight">
+            <summary>
+            Событие совершения полета
+            </summary>
+        </member>
+        <member name="E:Aviation.Aviation.IPassengerAviation`1.OnPassIn">
+            <summary>
+            Событие посадки пассажиров
+            </summary>
+        </member>
+        <member name="E:Aviation.Aviation.IPassengerAviation`1.OnPassOff">
+            <summary>
+            Событие Высадки пассажиров
+            </summary>
+        </member>
+        <member name="E:Aviation.Aviation.IPassengerAviation`1.OnSendingMessage">
+            <summary>
+            Событие посылки сообщения
+            </summary>
+        </member>
+        <member name="P:Aviation.Aviation.IPassengerAviation`1.Capacity">
+            <summary>
+            Вместимость салона(пассажиров)
+            </summary>
+        </member>
+        <member name="P:Aviation.Aviation.IPassengerAviation`1.Engaged">
+            <summary>
+            Занято мест
+            </summary>
+        </member>
+        <member name="P:Aviation.Aviation.IPassengerAviation`1.TankCapacity">
+            <summary>
+            Вместимость бака (литров)
+            </summary>
+        </member>
+        <member name="P:Aviation.Aviation.IPassengerAviation`1.Model">
+            <summary>
+            Модель воздушного судна
+            </summary>
+        </member>
+        <member name="P:Aviation.Aviation.IPassengerAviation`1.Engine">
+            <summary>
+            Двигатель судна
+            </summary>
+        </member>
+        <member name="M:Aviation.Aviation.IPassengerAviation`1.PlacePassenger(System.Int32)">
+            <summary>
+            Поместить пассажиров в судно
+            </summary>
+            <param name="count">Количество сажаемых пассажиров</param>
+        </member>
+        <member name="M:Aviation.Aviation.IPassengerAviation`1.DropOffPassenger">
+            <summary>
+            Высадить пассажиров
+            </summary>
+        </member>
+        <member name="M:Aviation.Aviation.IPassengerAviation`1.SendMessage(Aviation.Aviation.IPassengerAviation{Aviation.Engines.IEngine},System.String)">
+            <summary>
+            Отправить сообщение другому судну
+            </summary>
+            <param name="target">Цель сообщения</param>
+            <param name="mes">Текст сообщения</param>
+        </member>
+        <member name="M:Aviation.Aviation.IPassengerAviation`1.ReceiveMessage(System.String)">
+            <summary>
+            Получить сообщение с другого судна
+            </summary>
+            <param name="mes">Текст сообщения</param>
+        </member>
+        <member name="M:Aviation.Aviation.IPassengerAviation`1.MakeFlight(Aviation.Routs.Cities,Aviation.Routs.Cities)">
+            <summary>
+            Отправить судно в полет по заданному маршруту
+            </summary>
+            <param name="from">Город отправления</param>
+            <param name="to">Город прибытия</param>
+        </member>
+        <member name="T:Aviation.Aviation.Plane`1">
+            <summary>
+            Самолет
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.Direction">
+            <summary>
+            Список направлений движения вертолета
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.EngineBase">
+            <summary>
+            Базовый класс двигателей
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.GasTurbineEngine">
+            <summary>
+            Газотурбинный двигатель
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.HelicopterEngine">
+            <summary>
+            Вертолетный двигатель
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.IEngine">
+            <summary>
+            Интерфейс "двигатель"
+            </summary>
+        </member>
+        <member name="P:Aviation.Engines.IEngine.Consumption">
+            <summary>
+            Расход топлива на 100 км;
+            </summary>
+        </member>
+        <member name="P:Aviation.Engines.IEngine.Model">
+            <summary>
+            Модель двигателя
+            </summary>
+        </member>
+        <member name="P:Aviation.Engines.IEngine.Speed">
+            <summary>
+            Скорость движения
+            </summary>
+        </member>
+        <member name="M:Aviation.Engines.IEngine.Move">
+            <summary>
+            Перемещать судно
+            </summary>
+        </member>
+        <member name="M:Aviation.Engines.IEngine.ChangeSpeed(System.Int32)">
+            <summary>
+            Изменить скорость
+            </summary>
+            <param name="newSpeed"></param>
+        </member>
+        <member name="T:Aviation.Engines.IGasTurbineEngine">
+            <summary>
+            Интерфейс "газотурбинный двигатель"
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.IHelicopterEngine">
+            <summary>
+            Интерфейс "Вертолетный двигатель"
+            </summary>
+        </member>
+        <member name="M:Aviation.Engines.IHelicopterEngine.FlyTo(Aviation.Engines.Direction)">
+            <summary>
+            Указать направление полета
+            </summary>
+            <param name="to">Направление</param>
+        </member>
+        <member name="T:Aviation.Engines.IPlaneEngine">
+            <summary>
+            Интерфейс "Самолетный двигатель"
+            </summary>
+        </member>
+        <member name="M:Aviation.Engines.IPlaneEngine.Fly">
+            <summary>
+            Лететь вперед
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.IReactiveEngine">
+            <summary>
+            Интерфейс "реактивный двигатель"
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.ITurbopropEngine">
+            <summary>
+            Интерфейс "Турбовинтовой двигатель"
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.PlaneEngine">
+            <summary>
+            Самолетный двигатель
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.ReactiveEngine">
+            <summary>
+            Реактивный двигатель
+            </summary>
+        </member>
+        <member name="T:Aviation.Engines.TurbopropEngine">
+            <summary>
+            Турбовинтовой двигатель
+            </summary>
+        </member>
+        <member name="T:Aviation.Exeptions.UserException">
+            <summary>
+            Пользовательские исключения
+            </summary>
+        </member>
+        <member name="T:Aviation.Exeptions.NoTargetExeption">
+            <summary>
+            Исключение отсутствия цели сообщения
+            </summary>
+        </member>
+        <member name="T:Aviation.Exeptions.PassPlaceException">
+            <summary>
+            Исключение невалидных данных
+            </summary>
+        </member>
+        <member name="M:Aviation.Factories.RandomAviationGenerator.FillAeroport(System.Int32,System.Int32,Aviation.Aviation.IAeroport{Aviation.Aviation.IPassengerAviation{Aviation.Engines.IEngine}})">
+            <summary>
+            Заполнение аэропорта случайными судами по указанному количеству
+            </summary>
+            <param name="planes">Количество самолетов</param>
+            <param name="helicopters">Количество вертолетов</param>
+            <param name="aviation">Аэропорт</param>
+        </member>
+        <member name="T:Aviation.Factories.RussianAviationFactory">
+            <summary>
+            Фабрика русской авиации
+            </summary>
+        </member>
+        <member name="M:Aviation.Factories.RussianAviationFactory.#ctor">
+            <summary>
+            Конструктор по умолчанию, ведется загрузка данных из фалов
+            </summary>
+        </member>
+        <member name="M:Aviation.Factories.RussianAviationFactory.CreateHelicopter">
+            <summary>
+            Создать русский вертолет
+            </summary>
+            <returns>Русский вертолет</returns>
+        </member>
+        <member name="M:Aviation.Factories.RussianAviationFactory.CreateReactivePlane">
+            <summary>
+            Создать русский реактивный самолет
+            </summary>
+            <returns>Русский реактивный самолет</returns>
+        </member>
+        <member name="M:Aviation.Factories.RussianAviationFactory.CreateTurbopropPlane">
+            <summary>
+            Создать русский турбовинтовой самолет
+            </summary>
+            <returns>Русский турбовинтовой самолет</returns>
+        </member>
+        <member name="T:Aviation.Factories.IAviationFactory">
+            <summary>
+            Фабрика воздушных судов
+            </summary>
+        </member>
+        <member name="M:Aviation.Factories.IAviationFactory.CreateHelicopter">
+            <summary>
+            Создать вертолет
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aviation.Factories.IAviationFactory.CreateReactivePlane">
+            <summary>
+            Создать реактивный самолет
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aviation.Factories.IAviationFactory.CreateTurbopropPlane">
+            <summary>
+            Создать турбовинтовой самолет
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Aviation.Factories.AmericanAviationFactory">
+            <summary>
+            Фабрика американской авиации
+            </summary>
+        </member>
+        <member name="M:Aviation.Factories.AmericanAviationFactory.CreateReactivePlane">
+            <summary>
+            Создать американский реактивный самолет
+            </summary>
+            <returns>Американский реактивный самолет</returns>
+        </member>
+        <member name="M:Aviation.Factories.AmericanAviationFactory.CreateTurbopropPlane">
+            <summary>
+            Создать американский турбовинтовой самолет
+            </summary>
+            <returns>Американский турбовинтовой самолет</returns>
+        </member>
+        <member name="M:Aviation.Factories.AmericanAviationFactory.CreateHelicopter">
+            <summary>
+            Создать американский вертолет
+            </summary>
+            <returns>Американский вертолет</returns>
+        </member>
+        <member name="T:Aviation.Loggers.EventTypes">
+            <summary>
+            Типы событий авиации
+            </summary>
+        </member>
+        <member name="T:Aviation.Loggers.AviaEventArgs">
+            <summary>
+            Класс события для авиации
+            </summary>
+        </member>
+        <member name="P:Aviation.Loggers.AviaEventArgs.EventType">
+            <summary>
+            Тип события
+            </summary>
+        </member>
+        <member name="M:Aviation.Loggers.AviaEventArgs.#ctor(Aviation.Loggers.EventTypes)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="eventType">Тип события</param>
+        </member>
+        <member name="T:Aviation.Loggers.AviaPassInEventArgs">
+            <summary>
+            Класс события посадки пассажиров
+            </summary>
+        </member>
+        <member name="P:Aviation.Loggers.AviaPassInEventArgs.Count">
+            <summary>
+            Количество пассажиров на посадку
+            </summary>
+        </member>
+        <member name="M:Aviation.Loggers.AviaPassInEventArgs.#ctor(System.Int32)">
+            <summary>
+            Конструктор события
+            </summary>
+            <param name="count">Количество пассажиров на посадку</param>
+        </member>
+        <member name="T:Aviation.Loggers.AviaSendMessEventArgs">
+            <summary>
+            Класс события посылки сообщения
+            </summary>
+        </member>
+        <member name="P:Aviation.Loggers.AviaSendMessEventArgs.Target">
+            <summary>
+            Цель сообщения
+            </summary>
+        </member>
+        <member name="P:Aviation.Loggers.AviaSendMessEventArgs.Message">
+            <summary>
+            Сообщение
+            </summary>
+        </member>
+        <member name="M:Aviation.Loggers.AviaSendMessEventArgs.#ctor(Aviation.Aviation.IPassengerAviation{Aviation.Engines.IEngine},System.String)">
+            <summary>
+            Конструктор события
+            </summary>
+            <param name="target">Цель сообщения</param>
+            <param name="message">Сообщение</param>
+        </member>
+        <member name="T:Aviation.Loggers.AviaFlightEventArgs">
+            <summary>
+            Класс события совершения полета
+            </summary>
+        </member>
+        <member name="P:Aviation.Loggers.AviaFlightEventArgs.From">
+            <summary>
+            Город вылета
+            </summary>
+        </member>
+        <member name="P:Aviation.Loggers.AviaFlightEventArgs.To">
+            <summary>
+            Город прилета
+            </summary>
+        </member>
+        <member name="M:Aviation.Loggers.AviaFlightEventArgs.#ctor(Aviation.Routs.Cities,Aviation.Routs.Cities)">
+            <summary>
+            Конструктор события
+            </summary>
+            <param name="from">Город вылета</param>
+            <param name="to">Город прилета</param>
+        </member>
+        <member name="T:Aviation.Loggers.ConsoleLogger`1">
+            <summary>
+            Консольный логгер
+            </summary>
+        </member>
+        <member name="F:Aviation.Loggers.ConsoleLogger`1._avia">
+            <summary>
+            Экземпляр авиации, для которого ведется логгирование
+            </summary>
+        </member>
+        <member name="M:Aviation.Loggers.ConsoleLogger`1.#ctor(`0)">
+            <summary>
+            Конструктор логгера с выводом в консоль
+            </summary>
+            <param name="avia">Логгируемый экземпляр авиации</param>
+        </member>
+        <member name="F:Aviation.Loggers.ConsoleLogger`1.threadLock">
+            <summary>
+            Объект синхронизации
+            </summary>
+        </member>
+        <member name="M:Aviation.Loggers.ConsoleLogger`1.AviaEventHandler(Aviation.Loggers.AviaEventArgs)">
+            <summary>
+            Метод обработчика событий
+            </summary>
+            <param name="args">Аргументы события</param>
+        </member>
+        <member name="T:Aviation.Loggers.ExceptionLogger">
+            <summary>
+            Логгер для записи искючений
+            </summary>
+        </member>
+        <member name="F:Aviation.Loggers.ExceptionLogger.FilePath">
+            <summary>
+            Путь к файлу для записи
+            </summary>
+        </member>
+        <member name="F:Aviation.Loggers.ExceptionLogger.ToFile">
+            <summary>
+            Вести запись в файл? Иначе в консоль
+            </summary>
+        </member>
+        <member name="F:Aviation.Loggers.ExceptionLogger.threadLock">
+            <summary>
+            Объект синхронизации
+            </summary>
+        </member>
+        <member name="M:Aviation.Loggers.ExceptionLogger.LogUserException(Aviation.Exeptions.UserException)">
+            <summary>
+            Логгирование пользовательского исключения
+            </summary>
+            <param name="ex">Исключение</param>
+        </member>
+        <member name="M:Aviation.Loggers.ExceptionLogger.LogSystemException(System.Exception)">
+            <summary>
+            Логгирование системного исключения
+            </summary>
+            <param name="ex">Исключение</param>
+        </member>
+        <member name="F:Aviation.Loggers.FileLogger`1._avia">
+            <summary>
+            Экземпляр авиации, для которого ведется логгирование
+            </summary>
+        </member>
+        <member name="F:Aviation.Loggers.FileLogger`1._filePath">
+            <summary>
+            Путь для файла логгирования
+            </summary>
+        </member>
+        <member name="M:Aviation.Loggers.FileLogger`1.#ctor(`0,System.String)">
+            <summary>
+            Конструктор логгера с выводом в файл
+            </summary>
+            <param name="avia">Логгируемый экземпляр авиации</param>
+            <param name="filePath">Путь к файлу</param>
+        </member>
+        <member name="F:Aviation.Loggers.FileLogger`1.threadLock">
+            <summary>
+            Объект синхронизации
+            </summary>
+        </member>
+        <member name="M:Aviation.Loggers.FileLogger`1.AviaEventHandler(Aviation.Loggers.AviaEventArgs)">
+            <summary>
+            Метод обработчика событий
+            </summary>
+            <param name="args">Аргументы события</param>
+        </member>
+        <member name="T:Aviation.Loggers.ILogger`1">
+            <summary>
+            Интерфейс для логгера
+            </summary>
+        </member>
+        <member name="E:Aviation.Loggers.ILogger`1.OnLog">
+            <summary>
+            Событие для внешнего метода печати
+            </summary>
+        </member>
+        <member name="T:Aviation.AeroportExtension">
+            <summary>
+            Класс расширение
+            </summary>
+        </member>
+        <member name="M:Aviation.AeroportExtension.ConvertToString``1(Aviation.Aviation.Aeroport{``0})">
+            <summary>
+            Метод перевода коллекции в json-строку
+            </summary>
+            <typeparam name="T">Тип обобощенной коллекции</typeparam>
+            <param name="aer">Коллекция</param>
+            <returns>json-строка с объектами коллекции</returns>
+        </member>
+        <member name="M:Aviation.AeroportExtension.FindByFreePlaces(Aviation.Aviation.Aeroport{Aviation.Aviation.IPassengerAviation{Aviation.Engines.IEngine}},System.Int32)">
+            <summary>
+            Находит первое вхождение судна, у которого имеется достаточно свободных мест
+            </summary>
+            <param name="aer">Коллекция</param>
+            <returns>Судно, либо null, если таковых не найдено</returns>
+        </member>
+        <member name="M:Aviation.AeroportExtension.FindAllEmpty``1(Aviation.Aviation.Aeroport{``0})">
+            <summary>
+            Возвращает все пустые воздушные судна из коллекции
+            </summary>
+            <typeparam name="T">тип обобщенной коллекции</typeparam>
+            <param name="aer">Коллекция пустых самолетов</param>
+            <returns></returns>
+        </member>
+        <member name="T:Aviation.Routs">
+            <summary>
+            Маршруты полетов
+            </summary>
+        </member>
+        <member name="T:Aviation.Routs.Cities">
+            <summary>
+            Список городов
+            </summary>
+        </member>
+        <member name="M:Aviation.Routs.GetDistance(Aviation.Routs.Cities,Aviation.Routs.Cities)">
+            <summary>
+            Расстояние между городами
+            </summary>
+            <param name="from">Откуда</param>
+            <param name="to">Куда</param>
+            <returns>Расстояние</returns>
+        </member>
+        <member name="T:Aviation.Serializer.AeroportWrapper`1">
+            <summary>
+            Класс-обертка для сериализации аэропорта
+            </summary>
+        </member>
+        <member name="T:Aviation.Serializators.ISerializer`1">
+            <summary>
+            Интерфейс для сериализаторов
+            </summary>
+            <typeparam name="T">Тип сериализуемой коллекции</typeparam>
+        </member>
+        <member name="M:Aviation.Serializators.ISerializer`1.Serialize(Aviation.Aviation.Aeroport{`0},System.String)">
+            <summary>
+            Сериализация объекта
+            </summary>
+            <param name="avia">Объект</param>
+            <param name="filePath">Путь к файлу</param>
+        </member>
+        <member name="M:Aviation.Serializators.ISerializer`1.Deserialize(System.String)">
+            <summary>
+            Десериализация объекта
+            </summary>
+            <returns>Объект</returns>
+            <param name="filePath">Путь к файлу</param>
+        </member>
+    </members>
+</doc>

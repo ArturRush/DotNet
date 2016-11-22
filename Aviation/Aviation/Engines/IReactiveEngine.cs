@@ -9,7 +9,7 @@ namespace Aviation.Engines
 	/// <summary>
 	/// Интерфейс "реактивный двигатель"
 	/// </summary>
-	interface IReactiveEngine
+	interface IReactiveEngine : IPlaneEngine
 	{
 	}
 }

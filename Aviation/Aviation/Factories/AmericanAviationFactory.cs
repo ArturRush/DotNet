@@ -11,27 +11,38 @@ namespace Aviation.Factories
 	/// <summary>
 	/// Фабрика американской авиации
 	/// </summary>
-	class AmericanAviationFactory : IAviationFactory
+	public class AmericanAviationFactory : IAviationFactory
 	{
-		readonly IReactiveEngine BoeingReactiveEngine = new ReactiveEngine("GE90");
-		readonly IGasTurbineEngine RobinsonGasTurbineEngine = new GasTurbineEngine("RobS5W");
+		readonly ReactiveEngine _boeingReactiveEngine = new ReactiveEngine("GE90");
+		readonly GasTurbineEngine _robinsonGasTurbineEngine = new GasTurbineEngine("RobS5W");
+		readonly TurbopropEngine _b2TurbopropEngine = new TurbopropEngine("ST5");
+
+		/// <summary>
+		/// Создать американский реактивный самолет
+		/// </summary>
+		/// <returns>Американский реактивный самолет</returns>
+		public IPassengerAviation<IPlaneEngine> CreateReactivePlane()
+		{
+			return new Plane<ReactiveEngine>(80, 40000, "777", _boeingReactiveEngine);
+		}
+
+		/// <summary>
+		/// Создать американский турбовинтовой самолет
+		/// </summary>
+		/// <returns>Американский турбовинтовой самолет</returns>
+		public IPassengerAviation<IPlaneEngine> CreateTurbopropPlane()
+		{
+			return new Plane<TurbopropEngine>(70, 35000, "B52", _b2TurbopropEngine);
+		}
+
 
 		/// <summary>
 		/// Создать американский вертолет
 		/// </summary>
 		/// <returns>Американский вертолет</returns>
-		public IPassengerAviation CreateHelicopter()
+		public IPassengerAviation<IHelicopterEngine> CreateHelicopter()
 		{
-			return new Helicopter(4, 500, "R22", (IEngine)RobinsonGasTurbineEngine);
-		}
-
-		/// <summary>
-		/// Создать американский самолет
-		/// </summary>
-		/// <returns>Американский самолет</returns>
-		public IPassengerAviation CreatePlane()
-		{
-			return new Plane(120, 50000, "777", (IEngine)BoeingReactiveEngine);
+			return new Helicopter<GasTurbineEngine>(6, 550, "R22", _robinsonGasTurbineEngine);
 		}
 	}
 }

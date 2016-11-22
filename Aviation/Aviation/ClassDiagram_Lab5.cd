@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Aviation.Aviation.Aeroport&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAABAQCAAQBAQgAQAAAAAEAAAEQABQIQA=</HashCode>
+      <FileName>Aviation\Aeroport.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Aviation.Aviation.AeroportEnumerator&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAACAABAAAEACAAAAAAAAAAAAAoAAAQAAAAAA=</HashCode>
+      <FileName>Aviation\AeroportEnumerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Aviation.Aviation.Helicopter&lt;T&gt;" Collapsed="true">
+    <Position X="17.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAIAABAAAAAAAABA=</HashCode>
+      <FileName>Aviation\Helicopter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Aviation.Aviation.PassengerAviationBase&lt;T&gt;" Collapsed="true">
+    <Position X="16.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAQAAAAACAAABACACBAAIAFBAgBAAgAABA=</HashCode>
+      <FileName>Aviation\PassengerAviationBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Aviation.Aviation.Plane&lt;T&gt;" Collapsed="true">
+    <Position X="15.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAIAABAAAAAAAABA=</HashCode>
+      <FileName>Aviation\Plane.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Aviation.Engines.EngineBase" Collapsed="true">
+    <Position X="9.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAIAAAAAAAAAAAAARAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Engines\EngineBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Aviation.Engines.EngineChecker" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engines\EngineChecker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Aviation.Engines.GasTurbineEngine" Collapsed="true">
+    <Position X="7.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Engines\GasTurbineEngine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Aviation.Engines.HelicopterEngine" Collapsed="true">
+    <Position X="7.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Engines\HelicopterEngine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Aviation.Engines.PlaneEngine" Collapsed="true">
+    <Position X="10.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Engines\PlaneEngine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Aviation.Engines.ReactiveEngine" Collapsed="true">
+    <Position X="12" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Engines\ReactiveEngine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Aviation.Engines.TurbopropEngine" Collapsed="true">
+    <Position X="9.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engines\TurbopropEngine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Aviation.Exeptions.UserException" Collapsed="true">
+    <Position X="16.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exeptions\UserExeption.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Aviation.Exeptions.NoTargetExeption" Collapsed="true">
+    <Position X="15.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exeptions\UserExeption.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Aviation.Exeptions.PassPlaceException" Collapsed="true">
+    <Position X="17.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exeptions\UserExeption.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Aviation.Factories.AmericanAviationFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAABAAAAEIAAgACAAAAAAAA=</HashCode>
+      <FileName>Factories\AmericanAviationFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Aviation.Factories.RussianAviationFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAgAAAAAIAAABAAAAAIAAgAAAAUAAAAA=</HashCode>
+      <FileName>Factories\RussianAviationFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Aviation.Loggers.AviaEventArgs" Collapsed="true">
+    <Position X="9.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Loggers\AviaEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Aviation.Loggers.AviaPassInEventArgs" Collapsed="true">
+    <Position X="7.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Loggers\AviaEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Aviation.Loggers.AviaSendMessEventArgs" Collapsed="true">
+    <Position X="9.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Loggers\AviaEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Aviation.Loggers.AviaFlightEventArgs" Collapsed="true">
+    <Position X="12" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Loggers\AviaEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Aviation.Loggers.ConsoleLogger&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="27.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAQAAI=</HashCode>
+      <FileName>Loggers\ConsoleLogger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Aviation.Loggers.ExceptionLogger" Collapsed="true">
+    <Position X="24.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAIAAAAAAAEAAAABAAAAAAAA=</HashCode>
+      <FileName>Loggers\ExeptionLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Aviation.Loggers.FileLoggerr&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAACAAAAAAAAQAAI=</HashCode>
+      <FileName>Loggers\FileLogger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Aviation.Program" Collapsed="true">
+    <Position X="27.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAiAEAAAAAAAAAEAAAAFCAAACAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Aviation.Routs" Collapsed="true">
+    <Position X="22.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Routs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Aviation.Aviation.IHelicopter&lt;T&gt;" Collapsed="true">
+    <Position X="8.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Aviation\IHelicopter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Aviation.IAeroport&lt;T&gt;" Collapsed="true">
+    <Position X="22.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAQAAAgAQAAAAAEAAAEQAAAAQA=</HashCode>
+      <FileName>Aviation\IAeroport.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Aviation.IPassengerAviation&lt;T&gt;" Collapsed="true">
+    <Position X="9.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAQAAAAACAAABACACBAAIAFBAgBAAgAAAA=</HashCode>
+      <FileName>Aviation\IPassengerAviation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Aviation.IPlane&lt;T&gt;" Collapsed="true">
+    <Position X="11.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Aviation\IPlane.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Engines.ICheckEngine&lt;T&gt;" Collapsed="true">
+    <Position X="26" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engines\ICheckEngine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Engines.IEngine" Collapsed="true">
+    <Position X="17.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAIAAAAAAAAAAAAARAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Engines\IEngine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Engines.IGasTurbineEngine" Collapsed="true">
+    <Position X="15.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engines\IGasTurbineEngine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Engines.IHelicopterEngine" Collapsed="true">
+    <Position X="15.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Engines\IHelicopterEngine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Engines.IPlaneEngine" Collapsed="true">
+    <Position X="18.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Engines\IPlaneEngine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Engines.IReactiveEngine" Collapsed="true">
+    <Position X="17.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engines\IReactiveEngine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Engines.ITurbopropEngine" Collapsed="true">
+    <Position X="20" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engines\ITurbopropEngine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Factories.IAviationFactory" Collapsed="true">
+    <Position X="24.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAIAAgAAAAAAAAAA=</HashCode>
+      <FileName>Factories\IAviationFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Aviation.Loggers.ILogger&lt;T&gt;" Collapsed="true">
+    <Position X="27.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Loggers\ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Aviation.Loggers.EventTypes" Collapsed="true">
+    <Position X="22.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAg=</HashCode>
+      <FileName>Loggers\AviaEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

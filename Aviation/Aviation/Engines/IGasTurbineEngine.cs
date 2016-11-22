@@ -9,7 +9,7 @@ namespace Aviation.Engines
 	/// <summary>
 	/// Интерфейс "газотурбинный двигатель"
 	/// </summary>
-	interface IGasTurbineEngine
+	interface IGasTurbineEngine : IHelicopterEngine
 	{
 	}
 }

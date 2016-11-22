@@ -31,5 +31,12 @@ namespace Aviation.Engines
 		/// Перемещать судно
 		/// </summary>
 		void Move();
+
+
+		/// <summary>
+		/// Изменить скорость
+		/// </summary>
+		/// <param name="newSpeed"></param>
+		void ChangeSpeed(int newSpeed);
 	}
 }

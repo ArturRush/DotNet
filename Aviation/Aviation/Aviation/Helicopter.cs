@@ -1,21 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Aviation.Engines;
+using Aviation.Loggers;
 
 namespace Aviation.Aviation
 {
 	/// <summary>
 	/// Вертолет
 	/// </summary>
-	public class Helicopter : PassengerAviationBase
+	[Serializable]
+	public class Helicopter<T> : PassengerAviationBase<T>, IHelicopter<T> where T: IHelicopterEngine
 	{
-		public Helicopter(int capacity, int tankCapacity, string model, IEngine engine)
+		public event Action<AviaFlightEventArgs> OnFlight;
+
+		public Helicopter(int capacity, int tankCapacity, string model, T engine)
 			: base(capacity, tankCapacity, model, engine)
 		{
 			
+		}
+		public Helicopter()
+		{ }
+
+		public IEngine Engine
+		{
+			get { return base.Engine; }
 		}
 
 		override public void MakeFlight(Routs.Cities from, Routs.Cities to)
@@ -25,10 +32,19 @@ namespace Aviation.Aviation
 				Console.WriteLine("{0} не хватит топлива до пункта назначения", Model);
 				return;
 			}
-			Console.WriteLine("{0} готов к взлету", Model);
-			Console.WriteLine("Включить двигатель {0}", Engine.Model);
+			//Console.WriteLine("{0} готов к взлету", Model);
+			//Console.WriteLine("Включить двигатель {0}", Engine.Model);
 			Engine.Move();
-			Console.WriteLine("{0} приземляется", Model);
+			//Console.WriteLine("{0} приземляется", Model);
+			if (OnFlight != null)
+			{
+				OnFlight(new AviaFlightEventArgs(from, to));
+			}
+		}
+
+		public override object Clone()
+		{
+			return new Helicopter<T>(Capacity, TankCapacity, Model, (T)Engine);
 		}
 	}
 }

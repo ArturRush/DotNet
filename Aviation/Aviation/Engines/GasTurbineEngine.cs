@@ -9,7 +9,8 @@ namespace Aviation.Engines
 	/// <summary>
 	/// Газотурбинный двигатель
 	/// </summary>
-	public class GasTurbineEngine : EngineBase, IGasTurbineEngine
+	[Serializable]
+	public class GasTurbineEngine : HelicopterEngine, IGasTurbineEngine
 	{
 		private const int GasTurbineEngineSpeed = 200;
 		private const int GasTurbineEngineConsumption = 60;
@@ -18,11 +19,9 @@ namespace Aviation.Engines
 		{
 		}
 
-		override public void Move()
+		public GasTurbineEngine()
 		{
-			Console.WriteLine("Двигатель {0} разгоняет винт", Model);
-			Console.WriteLine("Судно взлетает");
-			Console.WriteLine("Судно прилетает в пункт назначения");
+			
 		}
 	}
 }

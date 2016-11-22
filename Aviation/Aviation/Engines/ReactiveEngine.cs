@@ -9,7 +9,8 @@ namespace Aviation.Engines
 	/// <summary>
 	/// Реактивный двигатель
 	/// </summary>
-	public class ReactiveEngine : EngineBase, IReactiveEngine
+	[Serializable]
+	public class ReactiveEngine : PlaneEngine, IReactiveEngine
 	{
 		private const int ReactiveEngineSpeed = 1000;
 		private const int ReactiveEngineConsumption = 1500;
@@ -18,11 +19,9 @@ namespace Aviation.Engines
 		{
 		}
 
-		override public void Move()
+		public ReactiveEngine()
 		{
-			Console.WriteLine("Двигатель {0} разгоняет судно", Model);
-			Console.WriteLine("Судно взлетает");
-			Console.WriteLine("Двигатель перемещает судно в пункт назначения");
+			
 		}
 	}
 }

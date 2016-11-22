@@ -13,6 +13,12 @@ namespace AviationExtentions
 {
 	class Program
 	{
+		/// <summary>
+		/// Заполняет коллекццию случайными воздушными судами
+		/// </summary>
+		/// <param name="aer">Коллекция для заполнения</param>
+		/// <param name="planesCount">Необходимое количество самолетов</param>
+		/// <param name="heliCount">Необходимое количество вертолетов</param>
 		private static void FillAer(Aeroport<IPassengerAviation<IEngine>> aer, int planesCount, int heliCount)
 		{
 			AmericanAviationFactory aaf = new AmericanAviationFactory();
@@ -55,16 +61,19 @@ namespace AviationExtentions
 		{
 			var aer = new Aeroport<IPassengerAviation<IEngine>>("Кольцово");
 			FillAer(aer, 15, 10);
+			//Посадим в каждое судно случайное количество пассажиров
 			Random r = new Random();
 			foreach (var avia in aer)
 			{
 				avia.PlacePassenger(r.Next(0, avia.Capacity));
 			}
-
+			//Конвертируем коллекцию в строку
 			Console.WriteLine(aer.ConvertToString());
+			//Находим, куда можно посадить 3 пассажира
 			var tmpAvia = aer.FindByFreePlaces(3);
 			if (tmpAvia != null)
 				Console.WriteLine("В этом судне достаточно мест:\n" + tmpAvia.ConvertToString());
+			//Находим все пустые воздушные суда
 			Console.WriteLine(aer.FindAllEmpty().ConvertToString());
 			Console.ReadKey();
 		}
@@ -122,6 +131,11 @@ namespace AviationExtentions
 			return res;
 		}
 
+		/// <summary>
+		/// Конвертирует экземпляр авиации в json-строку
+		/// </summary>
+		/// <param name="avia">Конвертируемый экземпляр</param>
+		/// <returns>json-строка</returns>
 		public static string ConvertToString(this IPassengerAviation<IEngine> avia)
 		{
 			return JsonConvert.SerializeObject(avia, Formatting.Indented);
